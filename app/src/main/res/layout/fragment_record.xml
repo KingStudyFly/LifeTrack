@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="@dimen/page_padding_top"
+        android:paddingBottom="100dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/record_title"
+            android:textColor="@color/text_primary"
+            android:textSize="28sp"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:letterSpacing="0.05"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/record_subtitle"
+            android:textColor="@color/text_subtitle"
+            android:textSize="13sp"
+            android:letterSpacing="0.05"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/record_tips_hint"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:lineSpacingExtra="3dp"
+            android:letterSpacing="0.02"
+            android:background="@drawable/bg_tips_bar"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginBottom="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:padding="20dp"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:layout_marginBottom="24dp"
+            android:elevation="2dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/editInput"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@android:color/transparent"
+                android:hint="@string/record_input_hint"
+                android:textColorHint="@color/text_hint"
+                android:textColor="@color/text_input"
+                android:textSize="16sp"
+                android:lineSpacingExtra="8dp"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:maxLength="2000"
+                android:scrollbars="vertical" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/border_light"
+                    android:layout_gravity="top"
+                    android:importantForAccessibility="no" />
+
+                <TextView
+                    android:id="@+id/tvCharCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|top"
+                    android:layout_marginTop="8dp"
+                    tools:text="0"
+                    android:textColor="@color/text_hint"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.03" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="12dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp">
+
+                <LinearLayout
+                    android:id="@+id/btnModeAudio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:background="@drawable/bg_toolbar_btn_ripple"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:minHeight="36dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:id="@+id/iconModeAudio"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_mic"
+                        android:layout_marginEnd="5dp"
+                        app:tint="@color/mode_btn_text_color"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:contentDescription="@string/mode_audio" />
+
+                    <TextView
+                        android:id="@+id/labelModeAudio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mode_audio_short"
+                        android:textSize="12sp"
+                        android:textColor="@color/mode_btn_text_color" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnModeImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:background="@drawable/bg_toolbar_btn_ripple"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:minHeight="36dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:id="@+id/iconModeImage"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_camera"
+                        android:layout_marginEnd="5dp"
+                        app:tint="@color/mode_btn_text_color"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:contentDescription="@string/mode_image" />
+
+                    <TextView
+                        android:id="@+id/labelModeImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mode_image_short"
+                        android:textSize="12sp"
+                        android:textColor="@color/mode_btn_text_color" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:importantForAccessibility="no" />
+
+                <TextView
+                    android:id="@+id/btnSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_save"
+                    android:textSize="13sp"
+                    android:textColor="@color/green_primary"
+                    android:fontFamily="sans-serif-medium"
+                    android:letterSpacing="0.1"
+                    android:background="@drawable/bg_save_btn_pill_ripple"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:minHeight="36dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 小回顾：今日主题标签 + 3 张同标签日记卡片 -->
+        <LinearLayout
+            android:id="@+id/flashbackSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- 今日主题标签头 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/flashback_theme_prefix"
+                    android:textColor="@color/text_subtitle"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.05" />
+
+                <TextView
+                    android:id="@+id/tvFlashbackTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tag_chip"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:layout_marginStart="6dp"
+                    android:textColor="@color/tag_chip_text"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.05"
+                    tools:text="梦境" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:importantForAccessibility="no" />
+
+                <TextView
+                    android:id="@+id/btnRefreshFlashback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/flashback_refresh"
+                    android:textColor="@color/green_primary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.05"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="@drawable/bg_toolbar_btn_ripple" />
+
+            </LinearLayout>
+
+            <!-- 3 张卡片纵向排列（从上到下，宽度占满） -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/flashbackCard1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card"
+                    android:orientation="vertical"
+                    android:padding="14dp"
+                    android:layout_marginBottom="8dp"
+                    android:elevation="1dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/fbDate1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_hint"
+                        android:textSize="11sp"
+                        android:letterSpacing="0.03"
+                        tools:text="2025-07-03" />
+
+                    <TextView
+                        android:id="@+id/fbText1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        android:lineSpacingExtra="4dp"
+                        android:maxLines="6"
+                        android:ellipsize="end"
+                        tools:text="日记摘要内容..." />
+
+                    <TextView
+                        android:id="@+id/fbReflection1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:textColor="@color/green_primary"
+                        android:textSize="10sp"
+                        android:visibility="gone"
+                        tools:text="已有 N 条感想" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/flashbackCard2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card"
+                    android:orientation="vertical"
+                    android:padding="14dp"
+                    android:layout_marginBottom="8dp"
+                    android:elevation="1dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/fbDate2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_hint"
+                        android:textSize="11sp"
+                        android:letterSpacing="0.03"
+                        tools:text="2025-06-15" />
+
+                    <TextView
+                        android:id="@+id/fbText2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        android:lineSpacingExtra="4dp"
+                        android:maxLines="6"
+                        android:ellipsize="end"
+                        tools:text="日记摘要内容..." />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/flashbackCard3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card"
+                    android:orientation="vertical"
+                    android:padding="14dp"
+                    android:elevation="1dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/fbDate3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_hint"
+                        android:textSize="11sp"
+                        android:letterSpacing="0.03"
+                        tools:text="2025-05-01" />
+
+                    <TextView
+                        android:id="@+id/fbText3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        android:lineSpacingExtra="4dp"
+                        android:maxLines="6"
+                        android:ellipsize="end"
+                        tools:text="日记摘要内容..." />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- 空状态/加载中文案 -->
+            <TextView
+                android:id="@+id/tvFlashbackEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/text_hint"
+                android:textSize="12sp"
+                android:letterSpacing="0.05"
+                android:visibility="gone"
+                tools:text="@string/flashback_empty_hint" />
+
+            <TextView
+                android:id="@+id/tvFlashbackLoading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/text_hint"
+                android:textSize="12sp"
+                android:letterSpacing="0.05"
+                android:visibility="gone"
+                android:text="@string/flashback_loading" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_page_label"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:text="@string/page_label_record"
+        android:textColor="@color/text_hint"
+        android:textSize="10sp"
+        android:letterSpacing="0.05"
+        android:elevation="3dp"
+        android:importantForAccessibility="no" />
+
+</FrameLayout>

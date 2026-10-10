@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ProfileFragment 动态菜单项 id，供 addMenuItem 设置 item.setId 使用 -->
+    <item name="menuExport" type="id"/>
+    <item name="menuExportDiary" type="id"/>
+    <item name="menuImportDiary" type="id"/>
+    <item name="menuPreferences" type="id"/>
+    <item name="menuAbout" type="id"/>
+    <item name="menuTheme" type="id"/>
+    <item name="menuTagFill" type="id"/>
+    <item name="menuNotification" type="id"/>
+    <!-- 我的页面：桌面小组件设置入口 -->
+    <item name="menuWidget" type="id"/>
+</resources>

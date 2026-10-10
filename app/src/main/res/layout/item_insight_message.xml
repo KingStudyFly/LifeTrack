@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/msgRootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
+
+    <!-- AI 头像（左侧） -->
+    <FrameLayout
+        android:id="@+id/avatarAi"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/bg_insight_avatar_ai"
+            android:importantForAccessibility="no" />
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_nav_insight"
+            android:contentDescription="@string/insight_title" />
+
+    </FrameLayout>
+
+    <!-- 中间留白（用户消息时占位） -->
+    <View
+        android:id="@+id/avatarSpacer"
+        android:layout_width="40dp"
+        android:layout_height="1dp"
+        android:importantForAccessibility="no"
+        android:visibility="gone" />
+
+    <!-- 消息气泡区域 -->
+    <LinearLayout
+        android:id="@+id/msgBubbleArea"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="@dimen/insight_msg_max_width"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="14sp"
+            android:lineSpacingExtra="4dp" />
+
+        <!-- 追问建议区域（由代码动态填充） -->
+        <LinearLayout
+            android:id="@+id/followUpArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start|center_vertical"
+            android:paddingTop="4dp"
+            android:visibility="gone" />
+
+        <!-- 打字指示器 -->
+        <LinearLayout
+            android:id="@+id/typingIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:visibility="gone">
+
+            <View
+                android:id="@+id/typingDot1"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bg_typing_indicator"
+                android:layout_marginEnd="4dp" />
+
+            <View
+                android:id="@+id/typingDot2"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bg_typing_indicator"
+                android:layout_marginEnd="4dp" />
+
+            <View
+                android:id="@+id/typingDot3"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bg_typing_indicator" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- 用户头像（右侧） -->
+    <FrameLayout
+        android:id="@+id/avatarUser"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/bg_insight_avatar_user"
+            android:importantForAccessibility="no" />
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_person"
+            android:contentDescription="@string/profile_avatar" />
+
+    </FrameLayout>
+
+    <!-- 右侧留白（AI 消息时占位） -->
+    <View
+        android:id="@+id/rightSpacer"
+        android:layout_width="40dp"
+        android:layout_height="1dp"
+        android:importantForAccessibility="no"
+        android:visibility="gone" />
+
+</LinearLayout>

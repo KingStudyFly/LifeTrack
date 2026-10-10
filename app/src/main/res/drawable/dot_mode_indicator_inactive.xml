@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <!-- 非当前页圆点：浅色 rgba(0,0,0,0.15)，深色 rgba(255,255,255,0.2) -->
+    <solid android:color="#26000000" />
+</shape>

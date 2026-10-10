@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/loginRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="40dp">
+
+        <!-- 顶部栏：返回按钮 + 标题 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:layout_marginBottom="28dp">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_chevron_left"
+                android:padding="8dp"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/cd_back" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/login_title"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                android:letterSpacing="0.05"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+        <!-- 登录表单卡片 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_card"
+            android:elevation="4dp"
+            android:padding="24dp">
+
+            <!-- 邮箱输入 -->
+            <EditText
+                android:id="@+id/editEmail"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_api_input"
+                android:hint="@string/login_hint_email"
+                android:textColorHint="@color/text_hint"
+                android:textColor="@color/text_input"
+                android:textSize="14sp"
+                android:inputType="textEmailAddress"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:letterSpacing="0.02"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
+                android:maxLength="100"
+                android:layout_marginBottom="6dp" />
+
+            <!-- 密码输入（FrameLayout 包裹，带眼睛图标） -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp">
+
+                <EditText
+                    android:id="@+id/editPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_api_input"
+                    android:hint="@string/login_hint_password"
+                    android:textColorHint="@color/text_hint"
+                    android:textColor="@color/text_input"
+                    android:textSize="14sp"
+                    android:inputType="textPassword"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="48dp"
+                    android:letterSpacing="0.02"
+                    android:singleLine="true"
+                    android:imeOptions="actionDone"
+                    android:maxLength="64" />
+
+                <ImageView
+                    android:id="@+id/btnTogglePassword"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="0dp"
+                    android:src="@drawable/ic_eye_off"
+                    android:alpha="0.6"
+                    android:padding="12dp"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/btn_toggle_password_desc" />
+
+            </FrameLayout>
+
+            <!-- 忘记密码 -->
+            <TextView
+                android:id="@+id/tvForgotPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_forgot_password"
+                android:textColor="@color/brown_accent"
+                android:textSize="12sp"
+                android:letterSpacing="0.03"
+                android:layout_gravity="end"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="20dp"
+                android:minHeight="48dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground" />
+
+            <!-- 登录按钮 -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="@string/login_btn_login"
+                android:textSize="14sp"
+                android:letterSpacing="0.08"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_btn_submit_ripple" />
+
+            <!-- 注册提示 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_register_hint"
+                    android:textColor="@color/text_subtitle"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_register_link"
+                    android:textColor="@color/green_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="4dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  玻璃卡片背景（浅色）—— 1:1 复刻 static_blur_preview.html 的 .card 质感：
+    background: rgba(255,255,255,0.88)
+    border: 0.5px solid rgba(255,255,255,0.55)
+    border-radius: 20px
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 6px 20px rgba(0,0,0,0.06)
+  阴影用 3 层递减 alpha 圆角矩形模拟高斯 blur 的边缘渐隐（自绘，兼容 API 26）。
+  主卡片四周内缩 1dp、底部 5dp，为柔影留出空间。
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 环境阴影层（最外，最淡） -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#0A000000" />
+            <corners android:radius="21dp" />
+        </shape>
+    </item>
+
+    <!-- 环境阴影层（中层） -->
+    <item android:bottom="2dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#0D000000" />
+            <corners android:radius="20.5dp" />
+        </shape>
+    </item>
+
+    <!-- 接触阴影层（最贴近卡片，最实） -->
+    <item android:bottom="4dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#12000000" />
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+
+    <!-- 主卡片：88% 白玻璃 + 55% 白高光描边 -->
+    <item
+        android:left="1dp"
+        android:top="1dp"
+        android:right="1dp"
+        android:bottom="5dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#E0FFFFFF" />
+            <corners android:radius="20dp" />
+            <stroke android:width="0.5dp" android:color="#8CFFFFFF" />
+        </shape>
+    </item>
+
+</layer-list>

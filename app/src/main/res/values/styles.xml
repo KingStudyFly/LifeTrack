@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 页面标题（serif bold） -->
+    <style name="PageTitle">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_xxl</item>
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <!-- 副标题 -->
+    <style name="PageSubtitle">
+        <item name="android:textColor">@color/text_subtitle</item>
+        <item name="android:textSize">@dimen/text_sm</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <!-- 卡片标题 -->
+    <style name="CardTitle">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_lg</item>
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <!-- 菜单标题 -->
+    <style name="MenuTitle">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_menu_title</item>
+        <item name="android:letterSpacing">0.03</item>
+    </style>
+
+    <!-- 菜单描述 -->
+    <style name="MenuDesc">
+        <item name="android:textColor">@color/text_subtitle</item>
+        <item name="android:textSize">@dimen/text_sm</item>
+    </style>
+
+    <!-- 统计数字 -->
+    <style name="StatNumber">
+        <item name="android:textColor">@color/green_primary</item>
+        <item name="android:textSize">@dimen/text_stat_number</item>
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- 统计标签 -->
+    <style name="StatLabel">
+        <item name="android:textColor">@color/text_subtitle</item>
+        <item name="android:textSize">@dimen/text_sm</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <!-- 主按钮 -->
+    <style name="PrimaryButton" parent="Widget.AppCompat.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/btn_height</item>
+        <item name="android:textSize">@dimen/text_md</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textColor">@color/green_primary</item>
+        <item name="android:background">@drawable/bg_btn_submit</item>
+    </style>
+
+    <!-- 版本号文字 -->
+    <style name="VersionText">
+        <item name="android:textColor">@color/text_hint</item>
+        <item name="android:textSize">@dimen/text_sm</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <!-- 桌面小组件的单条待办行：左侧竖排文字+ 右侧状态，左右留出呼吸空间 -->
+    <style name="WidgetTodoRow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:baselineAligned">false</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingTop">7dp</item>
+        <item name="android:paddingBottom">7dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <!-- 主标题：白色粗体大字，带阴影以适配任意壁纸 -->
+    <style name="WidgetTodoRowTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#66000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">4</item>
+    </style>
+
+    <!-- 副标题：半透明白小字，承载来源/时间提示 -->
+    <style name="WidgetTodoRowSub">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">#B3FFFFFF</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:shadowColor">#66000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">4</item>
+    </style>
+
+    <!-- 右侧状态列 -->
+    <style name="WidgetTodoRowStatus">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#66000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">4</item>
+    </style>
+</resources>

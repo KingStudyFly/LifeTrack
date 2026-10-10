@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 新增 / 编辑提醒通用对话框。
+     标题、确认按钮文案由代码动态设置；
+     删除按钮默认隐藏，仅编辑模式显示。
+     启用开关在列表项卡片上控制，对话框内只编辑时间和内容，更聚焦。 -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_dialog"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="24dp"
+        android:minWidth="320dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/tvNotificationTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notification_dialog_title"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:letterSpacing="0.05"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notification_time_label"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:layout_marginBottom="4dp" />
+
+        <TimePicker
+            android:id="@+id/timePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notification_content_label"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="4dp" />
+
+        <!-- 单行输入：内容过长会横向滚动，避免对话框被撑高 -->
+        <EditText
+            android:id="@+id/etContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_api_input"
+            android:padding="12dp"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:inputType="text"
+            android:maxLines="1"
+            android:maxLength="60"
+            android:hint="@string/notification_content_hint"
+            android:textColorHint="@color/text_hint"
+            android:imeOptions="actionDone" />
+
+        <!-- 同步到日历：编辑模式下可见，新增模式下隐藏（保存后才能加日历） -->
+        <TextView
+            android:id="@+id/btnToggleCalendar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="start|center_vertical"
+            android:text="@string/notification_alarm_enabled"
+            android:textColor="@color/green_primary"
+            android:textSize="13sp"
+            android:fontFamily="serif"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            android:layout_marginTop="8dp"
+            android:minHeight="48dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:visibility="gone"
+            android:drawablePadding="8dp"
+            app:drawableStartCompat="@drawable/ic_calendar"
+            app:drawableTint="@color/green_primary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/btnNotificationDelete"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="start|center_vertical"
+                android:text="@string/notification_delete"
+                android:textColor="@color/error"
+                android:textSize="14sp"
+                android:paddingStart="0dp"
+                android:paddingEnd="16dp"
+                android:minHeight="48dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/btnNotificationCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:text="@string/diary_cancel"
+                android:textColor="@color/text_subtitle"
+                android:textSize="14sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:minHeight="48dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground" />
+
+            <TextView
+                android:id="@+id/btnNotificationConfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:text="@string/month_picker_confirm"
+                android:textColor="@color/green_primary"
+                android:textSize="14sp"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:minHeight="48dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/btnDialogClose"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="top|start"
+        android:src="@drawable/ic_close"
+        android:background="@drawable/bg_dialog_close"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:padding="12dp"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/dialog_close" />
+
+</FrameLayout>

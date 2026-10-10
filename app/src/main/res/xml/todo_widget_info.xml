@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  桌面待办小组件声明（集合视图 + 垂直滚动版）。
+
+  ListView 高度用 layout_weight=1，会自动填满组件剩余空间，
+  故组件高度决定可见行数，超出部分可滚动查看。
+  默认 4 格高（约 300dp）可显示 6-7 行，足够常用场景。
+-->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="180dp"
+    android:minHeight="300dp"
+    android:minResizeWidth="110dp"
+    android:minResizeHeight="110dp"
+    android:targetCellWidth="3"
+    android:targetCellHeight="4"
+    android:resizeMode="horizontal|vertical"
+    android:updatePeriodMillis="1800000"
+    android:initialLayout="@layout/widget_todo"
+    android:previewLayout="@layout/widget_todo"
+    android:widgetCategory="home_screen"
+    android:description="@string/widget_todo_description" />

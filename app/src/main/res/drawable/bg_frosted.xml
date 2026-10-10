@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  预渲染毛玻璃背景（浅色）—— Layer 1
+  对应 static_blur_preview.html 的 .layer-frost：
+  多层径向渐变叠加，模拟"高斯模糊后的软色斑"，完全静态、零渲染成本。
+  中心用百分比定位，任意屏幕比例自动适配。
+
+  注意：shape 必须用 rectangle（不能用 oval）——
+  渐变会被裁剪在 shape 路径内，oval 路径是"内切全屏的椭圆"，
+  会把贴边色斑削出一条椭圆弧线。
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 底色（与 bg_primary 一致，避免渐变边缘露出窗口底色） -->
+    <item android:drawable="@color/bg_primary" />
+
+    <!-- 色斑 1：green_primary，左上 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.08"
+                android:centerY="0.04"
+                android:gradientRadius="260dp"
+                android:startColor="#528B9A7D"
+                android:endColor="#008B9A7D" />
+        </shape>
+    </item>
+
+    <!-- 色斑 2：brown_light，右上偏中 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.96"
+                android:centerY="0.18"
+                android:gradientRadius="230dp"
+                android:startColor="#4DC4A77D"
+                android:endColor="#00C4A77D" />
+        </shape>
+    </item>
+
+    <!-- 色斑 3：辅助淡绿，左中 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.04"
+                android:centerY="0.46"
+                android:gradientRadius="220dp"
+                android:startColor="#47A7C4A0"
+                android:endColor="#00A7C4A0" />
+        </shape>
+    </item>
+
+    <!-- 色斑 4：brown_accent，右下偏中 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.90"
+                android:centerY="0.62"
+                android:gradientRadius="240dp"
+                android:startColor="#4DB8A99A"
+                android:endColor="#00B8A99A" />
+        </shape>
+    </item>
+
+    <!-- 色斑 5：brown_dropdown，底部中间 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.30"
+                android:centerY="0.96"
+                android:gradientRadius="200dp"
+                android:startColor="#42D4B78D"
+                android:endColor="#00D4B78D" />
+        </shape>
+    </item>
+
+    <!-- 色斑 6：辅助淡绿，中上偏右（与预览里第 6 个渐变对应） -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.60"
+                android:centerY="0.30"
+                android:gradientRadius="190dp"
+                android:startColor="#47A7C4A0"
+                android:endColor="#00A7C4A0" />
+        </shape>
+    </item>
+
+</layer-list>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 单条提醒的卡片：左侧时间，中间内容，右侧开关。
+     整张卡片可点击进入编辑，开关点击事件独立处理。 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="@drawable/bg_card"
+    android:elevation="2dp"
+    android:padding="20dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground">
+
+    <!-- 左侧时间 -->
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="84dp"
+        tools:text="21:00"
+        android:textColor="@color/green_primary"
+        android:textSize="22sp"
+        android:fontFamily="serif"
+        android:textStyle="bold" />
+
+    <!-- 中间内容 -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="12dp">
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="记录今天的想法"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:maxLines="2"
+            android:ellipsize="end" />
+
+        <!-- 已开启闹钟标识，默认隐藏 -->
+        <TextView
+            android:id="@+id/tvCalendarBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/notification_alarm_enabled"
+            android:textColor="@color/green_primary"
+            android:textSize="10sp"
+            android:fontFamily="serif"
+            android:drawablePadding="4dp"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/ic_calendar"
+            app:drawableTint="@color/green_primary" />
+    </LinearLayout>
+
+    <!-- 右侧开关 -->
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchEnabled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

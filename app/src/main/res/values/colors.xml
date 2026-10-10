@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="bg_primary">#FAF8F5</color>
+    <color name="glass_fragment_bg">#FAF8F5</color>
+    <color name="bg_card">#FFFFFF</color>
+    <color name="bg_card_inner">#FFFFFF</color>
+    <color name="bg_placeholder">#F5F3F0</color>
+    <color name="bg_period_badge">#F0EBE5</color>
+    <color name="bg_nav_bar">#FAF8F5</color>
+
+    <color name="glass_card">#FFFFFF</color>
+    <color name="glass_card_inner">#FFFFFF</color>
+    <color name="glass_dialog">#FFFFFF</color>
+    <color name="glass_input">#8CFFFFFF</color>
+    <color name="glass_nav">#C7FAF8F5</color>
+    <color name="glass_dropdown">#FFFFFF</color>
+    <color name="glass_border_light">#E8E4DF</color>
+    <color name="glass_border_subtle">#E8E4DF</color>
+
+    <color name="green_primary">#8B9A7D</color>
+    <color name="green_primary_dark">#7A8A6C</color>
+
+    <color name="brown_accent">#B8A99A</color>
+    <color name="brown_accent_dark">#A69988</color>
+    <color name="brown_light">#C4A77D</color>
+    <color name="brown_dropdown">#D4C5B5</color>
+    <color name="brown_period_text">#8B7355</color>
+
+    <color name="text_primary">#1A1A1A</color>
+    <color name="text_secondary">#666666</color>
+    <color name="text_hint">#BBBBBB</color>
+    <color name="text_subtitle">#999999</color>
+    <color name="text_input">#333333</color>
+    <color name="text_dropdown">#5A4A3A</color>
+
+    <color name="border_light">#E8E4DF</color>
+    <color name="nav_divider">#0F000000</color>
+
+    <!-- 骨架屏 / 空状态 -->
+    <color name="skeleton_bg">#18000000</color>
+    <color name="empty_icon_bg">#0D000000</color>
+
+    <!-- 淡绿半透明底色，供 tips_bar 等提示条复用 -->
+    <color name="flashback_tag_bg">#268B9A7D</color>
+    <!-- 标签 chip 文字色 -->
+    <color name="tag_chip_text">#5A7A55</color>
+
+    <!-- 标签底色 -->
+    <color name="chip_letter_bg">#FFF3E0</color>
+    <color name="chip_key_persons">#E3F2FD</color>
+    <color name="chip_key_projects">#F3E5F5</color>
+    <color name="chip_key_events">#FFF3E0</color>
+    <color name="chip_emotion_themes">#FCE4EC</color>
+    <color name="chip_decisions">#E8F5E9</color>
+
+    <!-- Material3 语义色 -->
+    <color name="error">#B00020</color>
+    <color name="on_error">#FFFFFF</color>
+    <color name="primary_container">#DDE5D2</color>
+    <color name="on_primary_container">#2E3B22</color>
+    <color name="secondary_container">#E8DDD0</color>
+    <color name="on_secondary_container">#3A2A1A</color>
+</resources>

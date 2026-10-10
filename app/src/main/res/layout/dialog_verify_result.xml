@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@drawable/bg_dialog"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="28dp"
+        android:minWidth="300dp">
+
+        <ImageView
+            android:id="@+id/ivVerifyIcon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_dialog_icon"
+            android:src="@drawable/ic_check"
+            android:padding="14dp"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="@string/dialog_verify_success_title" />
+
+        <TextView
+            android:id="@+id/tvVerifyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_verify_success_title"
+            android:textColor="@color/text_primary"
+            android:textSize="20sp"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:letterSpacing="0.05"
+            android:layout_marginBottom="20dp" />
+
+        <LinearLayout
+            android:id="@+id/rowDeepSeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_dropdown_item"
+            android:padding="12dp"
+            android:layout_marginBottom="24dp">
+
+            <ImageView
+                android:id="@+id/ivDeepSeekStatus"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_check"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="@string/verify_service_analyzer" />
+
+            <TextView
+                android:id="@+id/tvDeepSeekLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/verify_service_analyzer"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvDeepSeekDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/verify_status_ok"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDialogOk"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/dialog_btn_ok"
+            android:textSize="15sp"
+            android:letterSpacing="0.08"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_btn_submit_ripple" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/btnDialogClose"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="top|start"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:src="@drawable/ic_close"
+        android:background="@drawable/bg_dialog_close"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:padding="12dp"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/dialog_close" />
+
+</FrameLayout>

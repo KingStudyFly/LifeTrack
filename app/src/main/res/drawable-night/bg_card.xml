@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  玻璃卡片背景（深色）—— 对应预览 .dark .card：
+    background: rgba(30,30,30,0.88)
+    border: 0.5px solid rgba(255,255,255,0.10)
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35)
+  深色下阴影 alpha 明显加大，玻璃底色改为半透明深灰。
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 环境阴影层（最外，最淡） -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#26000000" />
+            <corners android:radius="21dp" />
+        </shape>
+    </item>
+
+    <!-- 环境阴影层（中层） -->
+    <item android:bottom="2dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#33000000" />
+            <corners android:radius="20.5dp" />
+        </shape>
+    </item>
+
+    <!-- 接触阴影层（最贴近卡片，最实） -->
+    <item android:bottom="4dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#40000000" />
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+
+    <!-- 主卡片：88% 深灰玻璃 + 10% 白高光描边 -->
+    <item
+        android:left="1dp"
+        android:top="1dp"
+        android:right="1dp"
+        android:bottom="5dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#E01E1E1E" />
+            <corners android:radius="20dp" />
+            <stroke android:width="0.5dp" android:color="#1AFFFFFF" />
+        </shape>
+    </item>
+
+</layer-list>

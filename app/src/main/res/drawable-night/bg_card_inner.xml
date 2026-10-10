@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  内嵌玻璃卡片背景（深色，radius 16dp）—— 深色质感配方：
+  88% 深灰玻璃 + 10% 白高光描边 + 加深的两层柔影。
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 环境阴影层（最外，最淡） -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#26000000" />
+            <corners android:radius="17dp" />
+        </shape>
+    </item>
+
+    <!-- 接触阴影层 -->
+    <item android:bottom="3dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#33000000" />
+            <corners android:radius="16.5dp" />
+        </shape>
+    </item>
+
+    <!-- 主卡片：88% 深灰玻璃 + 白高光描边 -->
+    <item
+        android:left="1dp"
+        android:top="1dp"
+        android:right="1dp"
+        android:bottom="4dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#E02A2A2A" />
+            <corners android:radius="16dp" />
+            <stroke android:width="0.5dp" android:color="#1AFFFFFF" />
+        </shape>
+    </item>
+
+</layer-list>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  小组件透明度设置里的预览底图：浅灰棋盘格。
+  作用是让"半透明白底"能明显区别于"纯白"，否则调低透明度时看不出变化。
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#F0EEEA" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+
+    <!-- 交错方格，间距 16dp -->
+    <item
+        android:left="8dp"
+        android:top="8dp"
+        android:bottom="-8dp"
+        android:right="-8dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#E2DFDA" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+</layer-list>

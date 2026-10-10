@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  桌面待办小组件背景：极淡乳白蒙层（磨砂玻璃观感）。
+
+  关键：不透明度完全交给 Provider 的 setAlpha 控制（0-255），
+  故此处 solid 只能是纯白——任何额外的不透明都会叠加成「实心卡片」。
+  描边同理，用极淡的白色模拟磨砂高光边缘。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#FFFFFF" />
+    <corners android:radius="22dp" />
+    <stroke
+        android:width="0.5dp"
+        android:color="#26FFFFFF" />
+</shape>

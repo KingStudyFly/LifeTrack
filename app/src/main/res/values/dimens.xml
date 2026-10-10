@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 通用间距 -->
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_sm">8dp</dimen>
+    <dimen name="spacing_md">16dp</dimen>
+    <dimen name="spacing_lg">24dp</dimen>
+    <dimen name="spacing_xl">32dp</dimen>
+
+    <!-- 通用文字大小 -->
+    <dimen name="text_sm">12sp</dimen>
+    <dimen name="text_md">14sp</dimen>
+    <dimen name="text_lg">16sp</dimen>
+    <dimen name="text_xl">20sp</dimen>
+    <dimen name="text_xxl">28sp</dimen>
+    <dimen name="text_menu_title">15sp</dimen>
+    <dimen name="text_stat_number">22sp</dimen>
+
+    <!-- 组件尺寸 -->
+    <dimen name="icon_lg">48dp</dimen>
+    <dimen name="avatar_size">96dp</dimen>
+    <dimen name="btn_height">44dp</dimen>
+
+    <!-- 卡片 -->
+    <dimen name="card_padding">24dp</dimen>
+
+    <!-- 页面边距 -->
+    <dimen name="page_padding_h">24dp</dimen>
+    <dimen name="page_padding_top">16dp</dimen>
+    <dimen name="page_padding_bottom">100dp</dimen>
+
+    <!-- WaveformView 默认尺寸 -->
+    <dimen name="waveform_default_width">120dp</dimen>
+    <dimen name="waveform_default_height">48dp</dimen>
+
+    <!-- Fragment 切换动画 -->
+    <dimen name="fragment_slide_offset">30dp</dimen>
+
+    <!-- 洞察消息最大宽度 -->
+    <dimen name="insight_msg_max_width">280dp</dimen>
+</resources>

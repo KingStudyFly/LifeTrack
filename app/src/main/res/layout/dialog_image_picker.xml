@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@drawable/bg_dialog"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="24dp"
+        android:minWidth="300dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/image_picker_title"
+            android:textColor="@color/text_primary"
+            android:textSize="20sp"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:letterSpacing="0.05"
+            android:layout_marginBottom="24dp" />
+
+        <LinearLayout
+            android:id="@+id/btnPickerCamera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_dropdown_item"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="14dp"
+            android:minHeight="48dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_camera"
+                android:layout_marginEnd="14dp"
+                android:contentDescription="@string/image_picker_camera" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/image_picker_camera"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnPickerGallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_dropdown_item"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="14dp"
+            android:minHeight="48dp"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_photo_library"
+                android:layout_marginEnd="14dp"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/image_picker_gallery"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnPickerCancel"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/image_picker_cancel"
+            android:textSize="15sp"
+            android:letterSpacing="0.08"
+            android:textColor="@color/text_secondary"
+            android:background="@drawable/bg_dropdown_item"
+            android:foreground="?attr/selectableItemBackground" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/btnDialogClose"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="top|start"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:src="@drawable/ic_close"
+        android:background="@drawable/bg_dialog_close"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:padding="12dp"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/dialog_close" />
+
+</FrameLayout>

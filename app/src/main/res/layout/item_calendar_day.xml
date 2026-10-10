@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:descendantFocusability="blocksDescendants">
+
+    <FrameLayout
+        android:layout_width="48dp"
+        android:layout_height="48dp">
+
+        <!-- 圆圈固定 36dp 居中，避免 GridView 7 列列宽小于 48dp 时圆圈被裁剪。
+             36dp 足以覆盖 14sp 数字（约 20dp 高），视觉上居中显示更清爽。 -->
+        <View
+            android:id="@+id/bgSelected"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_calendar_selected"
+            android:importantForAccessibility="no"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/bgToday"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_calendar_today"
+            android:importantForAccessibility="no"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvDay"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp" />
+
+    </FrameLayout>
+
+    <View
+        android:id="@+id/dotDiary"
+        android:layout_width="4dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/dot_diary"
+        android:importantForAccessibility="no"
+        android:visibility="gone" />
+
+</LinearLayout>

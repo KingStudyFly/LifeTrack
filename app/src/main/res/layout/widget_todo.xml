@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  桌面待办小组件（集合视图 + 垂直滚动版）。
+
+  滚动为什么必须用 ListView：RemoteViews 的控件白名单不含 ScrollView，
+  放进去会抛「View not supported as child of RemoteViews」。
+  官方方案是集合视图（ListView）配RemoteViewsService，自带垂直滚动。
+
+  背景透明度：圆角 drawable 放在 ImageView 的 src 上，
+  由 Provider 用 setInt(...,"setImageAlpha") 调节——若用 background +
+  setBackgroundColor会被整体替换掉，圆角就没了。
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetTodoRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 磨砂半透明背景：透明度可调 -->
+    <ImageView
+        android:id="@+id/widgetTodoBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_widget_todo" />
+
+    <!--
+      内容层用 wrap_content：组件被用户拉高时，match_parent 会把多余空间
+      摊到标题与列表之间，造成标题下方大片空白。
+    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="18dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="12dp">
+
+        <!-- 标题行：LifeTrack · 待办            N 项未完成 -->
+        <LinearLayout
+            android:id="@+id/widgetTodoHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/widgetTodoTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:shadowColor="#66000000"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:shadowRadius="4"
+                android:text="@string/widget_todo_title"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/widgetTodoCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:shadowColor="#66000000"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:shadowRadius="4"
+                android:textColor="#CCFFFFFF"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!--
+          集合视图：可垂直滚动。
+          高度用 wrap_content 而非 weight —— 部分 launcher 对「ListView +
+          layout_weight」的组合处理异常，会导致集合视图拿不到数据。
+
+          listSelector / cacheColorHint 设为透明，避免拖动时出现按压高亮
+          与黑底缓存色；这两项是纯视觉属性，不影响服务连接。
+        -->
+        <ListView
+            android:id="@+id/widgetTodoList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:cacheColorHint="@android:color/transparent"
+            android:clipToPadding="false"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:listSelector="@android:color/transparent"
+            android:paddingBottom="4dp"
+            android:scrollbars="none" />
+
+        <TextView
+            android:id="@+id/widgetTodoEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:shadowColor="#66000000"
+            android:shadowDx="0"
+            android:shadowDy="1"
+            android:shadowRadius="4"
+            android:text="@string/widget_todo_empty"
+            android:textColor="#CCFFFFFF"
+            android:textSize="13sp"
+            android:visibility="gone" />
+    </LinearLayout>
+</FrameLayout>

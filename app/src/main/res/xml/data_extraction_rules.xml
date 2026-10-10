@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 排除敏感数据备份/迁移：加密 SP 与数据库绑定 Android Keystore，跨设备无法解密。 -->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="sharedpref" path="."/>
+        <exclude domain="database" path="."/>
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="sharedpref" path="."/>
+        <exclude domain="database" path="."/>
+    </device-transfer>
+</data-extraction-rules>

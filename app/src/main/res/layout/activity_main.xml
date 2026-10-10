@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary">
+
+    <!-- Layer 1：预渲染毛玻璃背景（静态径向渐变色斑，零渲染成本，深色模式自动切换 drawable-night 变体） -->
+    <View
+        android:id="@+id/frostBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_frosted"
+        android:importantForAccessibility="no" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- 底部导航顶部 0.5px 分割线（spec: glass-border-subtle） -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/glass_border_subtle"
+            android:importantForAccessibility="no" />
+
+        <!-- 底部导航（自定义 6 项，BottomNavigationView 最多支持 5 项无法使用） -->
+        <LinearLayout
+            android:id="@+id/bottomNav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/glass_nav"
+            android:elevation="0dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/nav_record"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/nav_icon_record"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_nav_record"
+                    android:contentDescription="@string/tab_record" />
+
+                <TextView
+                    android:id="@+id/nav_label_record"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/tab_record"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.05" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nav_schedule"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/nav_icon_schedule"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_nav_schedule"
+                    android:contentDescription="@string/tab_schedule" />
+
+                <TextView
+                    android:id="@+id/nav_label_schedule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/tab_schedule"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.05" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nav_track"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/nav_icon_track"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_nav_track"
+                    android:contentDescription="@string/tab_track" />
+
+                <TextView
+                    android:id="@+id/nav_label_track"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/tab_track"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.05" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nav_diary"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/nav_icon_diary"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_nav_diary"
+                    android:contentDescription="@string/tab_diary" />
+
+                <TextView
+                    android:id="@+id/nav_label_diary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/tab_diary"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.05" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nav_insight"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/nav_icon_insight"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_nav_insight"
+                    android:contentDescription="@string/tab_insight" />
+
+                <TextView
+                    android:id="@+id/nav_label_insight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/tab_insight"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.05" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nav_profile"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/nav_icon_profile"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_nav_profile"
+                    android:contentDescription="@string/tab_profile" />
+
+                <TextView
+                    android:id="@+id/nav_label_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/tab_profile"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.05" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- 顶部模式指示器：6 个圆点（spec: 8px, gap 4px, 当前页 green-primary, 其余 rgba(0,0,0,0.15)） -->
+    <LinearLayout
+        android:id="@+id/modeIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:elevation="10dp"
+        android:importantForAccessibility="no">
+
+        <View
+            android:id="@+id/dot0"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/dot_mode_indicator_active" />
+
+        <View
+            android:id="@+id/dot1"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/dot_mode_indicator_inactive" />
+
+        <View
+            android:id="@+id/dot2"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/dot_mode_indicator_inactive" />
+
+        <View
+            android:id="@+id/dot3"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/dot_mode_indicator_inactive" />
+
+        <View
+            android:id="@+id/dot4"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="@drawable/dot_mode_indicator_inactive" />
+
+        <View
+            android:id="@+id/dot5"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/dot_mode_indicator_inactive" />
+
+    </LinearLayout>
+
+</FrameLayout>

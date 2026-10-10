@@ -1,0 +1,969 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/page_padding_top"
+            android:paddingBottom="100dp">
+
+            <!-- 标题区 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/track_title"
+                    android:textColor="@color/text_primary"
+                    android:textSize="28sp"
+                    android:fontFamily="serif"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.05"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/track_subtitle"
+                    android:textColor="@color/text_subtitle"
+                    android:textSize="13sp"
+                    android:letterSpacing="0.05"
+                    android:layout_marginBottom="20dp" />
+
+                <!-- 横向滑动标签条 -->
+                <HorizontalScrollView
+                    android:id="@+id/tabBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:overScrollMode="never"
+                    android:fillViewport="true">
+
+                    <LinearLayout
+                        android:id="@+id/tabContainer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tabSummary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/track_tab_summary"
+                            android:textColor="@color/brown_period_text"
+                            android:textSize="14sp"
+                            android:letterSpacing="0.05"
+                            android:background="@drawable/bg_track_tab_active"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="18dp"
+                            android:paddingTop="9dp"
+                            android:paddingBottom="9dp"
+                            android:layout_marginEnd="10dp"
+                            android:minHeight="36dp"
+                            android:gravity="center"
+                            android:clickable="true"
+                            android:focusable="true" />
+
+                        <TextView
+                            android:id="@+id/tabExercise"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/track_tab_exercise"
+                            android:textColor="@color/text_subtitle"
+                            android:textSize="14sp"
+                            android:letterSpacing="0.05"
+                            android:background="@drawable/bg_track_tab"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="18dp"
+                            android:paddingTop="9dp"
+                            android:paddingBottom="9dp"
+                            android:layout_marginEnd="10dp"
+                            android:minHeight="36dp"
+                            android:gravity="center"
+                            android:clickable="true"
+                            android:focusable="true" />
+
+                        <TextView
+                            android:id="@+id/tabSleep"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/track_tab_sleep"
+                            android:textColor="@color/text_subtitle"
+                            android:textSize="14sp"
+                            android:letterSpacing="0.05"
+                            android:background="@drawable/bg_track_tab"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="18dp"
+                            android:paddingTop="9dp"
+                            android:paddingBottom="9dp"
+                            android:layout_marginEnd="10dp"
+                            android:minHeight="36dp"
+                            android:gravity="center"
+                            android:clickable="true"
+                            android:focusable="true" />
+
+                        <TextView
+                            android:id="@+id/tabSocial"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/track_tab_social"
+                            android:textColor="@color/text_subtitle"
+                            android:textSize="14sp"
+                            android:letterSpacing="0.05"
+                            android:background="@drawable/bg_track_tab"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="18dp"
+                            android:paddingTop="9dp"
+                            android:paddingBottom="9dp"
+                            android:minHeight="36dp"
+                            android:gravity="center"
+                            android:clickable="true"
+                            android:focusable="true" />
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+            </LinearLayout>
+
+            <!-- 「总结」Tab 内容容器：保留原有周期选择与总结卡片 -->
+            <LinearLayout
+                android:id="@+id/summaryTabContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp">
+
+                <LinearLayout
+                    android:id="@+id/dropdownTrigger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_dropdown_trigger"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:layout_marginBottom="16dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:id="@+id/tvCurrentPeriod"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/period_daily"
+                        android:textColor="@color/text_dropdown"
+                        android:textSize="15sp"
+                        android:letterSpacing="0.05"
+                        android:layout_marginEnd="8dp" />
+
+                    <ImageView
+                        android:id="@+id/ivArrow"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_arrow_down"
+                        android:contentDescription="@string/cd_dropdown" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="20dp">
+
+                    <ImageView
+                        android:id="@+id/btnPrevPeriod"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_chevron_left"
+                        android:padding="8dp"
+                        android:minWidth="36dp"
+                        android:minHeight="36dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="@string/cd_prev_period" />
+
+                    <TextView
+                        android:id="@+id/tvPeriodBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_period_badge"
+                        android:textColor="@color/brown_period_text"
+                        android:textSize="12sp"
+                        android:letterSpacing="0.05"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:minHeight="32dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                    <ImageView
+                        android:id="@+id/btnNextPeriod"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_chevron_right"
+                        android:padding="8dp"
+                        android:minWidth="36dp"
+                        android:minHeight="36dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="@string/cd_next_period" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:importantForAccessibility="no" />
+
+                    <TextView
+                        android:id="@+id/btnRegenerate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/track_regenerate"
+                        android:textColor="@color/brown_period_text"
+                        android:textSize="12sp"
+                        android:letterSpacing="0.05"
+                        android:background="@drawable/bg_period_badge"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:minWidth="36dp"
+                        android:minHeight="32dp"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="@string/cd_regenerate" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/contentArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/summaryHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/bg_card"
+                        android:padding="24dp"
+                        android:elevation="2dp"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:id="@+id/tvContentTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"
+                            android:fontFamily="serif"
+                            android:textStyle="bold"
+                            android:letterSpacing="0.05" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/cardsContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- 「运动」Tab 内容容器 -->
+            <LinearLayout
+                android:id="@+id/exerciseTabContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="40dp"
+                android:visibility="gone">
+
+                <!-- 周期切换行 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageView
+                        android:id="@+id/btnPrevExercisePeriod"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_chevron_left"
+                        android:padding="8dp"
+                        android:minWidth="36dp"
+                        android:minHeight="36dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="@string/cd_prev_period" />
+
+                    <TextView
+                        android:id="@+id/tvExercisePeriodBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_period_badge"
+                        android:text="@string/track_dim_period_month"
+                        android:textColor="@color/brown_period_text"
+                        android:textSize="12sp"
+                        android:letterSpacing="0.05"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:minHeight="32dp"
+                        android:gravity="center"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp" />
+
+                    <ImageView
+                        android:id="@+id/btnNextExercisePeriod"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_chevron_right"
+                        android:padding="8dp"
+                        android:minWidth="36dp"
+                        android:minHeight="36dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="@string/cd_next_period" />
+
+                </LinearLayout>
+
+                <!-- 运动强度趋势卡片 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="20dp"
+                    android:elevation="2dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/track_exercise_chart_title"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp"
+                        android:fontFamily="serif"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.05"
+                        android:layout_marginBottom="8dp" />
+
+                    <com.example.lifetrack.DimensionChartView
+                        android:id="@+id/exerciseChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp" />
+
+                </LinearLayout>
+
+                <!-- 运动类型统计卡片 -->
+                <LinearLayout
+                    android:id="@+id/exerciseTypesContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="20dp"
+                    android:elevation="2dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/track_exercise_types_title"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp"
+                        android:fontFamily="serif"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.05"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvExerciseTypesEmpty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/track_dim_empty_exercise"
+                        android:textColor="@color/text_subtitle"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:id="@+id/exerciseTypesList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+
+                </LinearLayout>
+
+                <!-- 运动能力进步分析卡片 -->
+                <LinearLayout
+                    android:id="@+id/exerciseProgressContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="20dp"
+                    android:elevation="2dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/track_exercise_progress_title"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp"
+                        android:fontFamily="serif"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.05"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvExerciseProgressContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/track_dim_no_analysis"
+                        android:textColor="@color/brown_period_text"
+                        android:textSize="13sp"
+                        android:lineSpacingExtra="4dp"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                </LinearLayout>
+
+                <!-- 读取过往日记按钮 -->
+                <TextView
+                    android:id="@+id/btnExerciseLoadHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/track_dim_load_history"
+                    android:textColor="@color/brown_period_text"
+                    android:textSize="13sp"
+                    android:letterSpacing="0.05"
+                    android:background="@drawable/bg_period_badge"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+            </LinearLayout>
+
+            <!-- 「睡眠」Tab 内容容器 -->
+            <LinearLayout
+                android:id="@+id/sleepTabContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="40dp"
+                android:visibility="gone">
+
+                <!-- 周期切换行 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageView
+                        android:id="@+id/btnPrevSleepPeriod"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_chevron_left"
+                        android:padding="8dp"
+                        android:minWidth="36dp"
+                        android:minHeight="36dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="@string/cd_prev_period" />
+
+                    <TextView
+                        android:id="@+id/tvSleepPeriodBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_period_badge"
+                        android:text="@string/track_dim_period_month"
+                        android:textColor="@color/brown_period_text"
+                        android:textSize="12sp"
+                        android:letterSpacing="0.05"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:minHeight="32dp"
+                        android:gravity="center"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp" />
+
+                    <ImageView
+                        android:id="@+id/btnNextSleepPeriod"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_chevron_right"
+                        android:padding="8dp"
+                        android:minWidth="36dp"
+                        android:minHeight="36dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="@string/cd_next_period" />
+
+                </LinearLayout>
+
+                <!-- 睡眠质量趋势卡片 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="20dp"
+                    android:elevation="2dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/track_sleep_chart_title"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp"
+                        android:fontFamily="serif"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.05"
+                        android:layout_marginBottom="8dp" />
+
+                    <com.example.lifetrack.DimensionChartView
+                        android:id="@+id/sleepChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp" />
+
+                </LinearLayout>
+
+                <!-- 睡眠分数统计卡片 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="20dp"
+                    android:elevation="2dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/track_sleep_stats_title"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp"
+                        android:fontFamily="serif"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.05"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvSleepStatsEmpty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/track_dim_empty_sleep"
+                        android:textColor="@color/text_subtitle"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:id="@+id/sleepStatsList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+
+                </LinearLayout>
+
+                <!-- 恶性睡眠影响因素卡片 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card"
+                    android:padding="20dp"
+                    android:elevation="2dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/track_sleep_factors_title"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp"
+                        android:fontFamily="serif"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.05"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvSleepFactorsContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/track_dim_no_analysis"
+                        android:textColor="@color/brown_period_text"
+                        android:textSize="13sp"
+                        android:lineSpacingExtra="4dp"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                </LinearLayout>
+
+                <!-- 读取过往日记按钮 -->
+                <TextView
+                    android:id="@+id/btnSleepLoadHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/track_dim_load_history"
+                    android:textColor="@color/brown_period_text"
+                    android:textSize="13sp"
+                    android:letterSpacing="0.05"
+                    android:background="@drawable/bg_period_badge"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+            </LinearLayout>
+
+            <!-- 「社交」Tab 内容容器 -->
+            <LinearLayout
+                android:id="@+id/socialTabContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="40dp"
+                android:visibility="gone">
+
+                <!-- 固定周期徽章 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_period_badge"
+                        android:text="@string/track_dim_period_3month"
+                        android:textColor="@color/brown_period_text"
+                        android:textSize="12sp"
+                        android:letterSpacing="0.05"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:minHeight="32dp"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+                <!-- 标题 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/track_social_title"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp"
+                    android:fontFamily="serif"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.05"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- 空状态提示 -->
+                <TextView
+                    android:id="@+id/tvSocialEmpty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/track_dim_empty_social"
+                    android:textColor="@color/text_subtitle"
+                    android:textSize="13sp"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- 人物交流卡片列表容器（Java 动态填充） -->
+                <LinearLayout
+                    android:id="@+id/socialContactsList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+                <!-- 读取过往日记按钮 -->
+                <TextView
+                    android:id="@+id/btnSocialLoadHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/track_dim_load_history"
+                    android:textColor="@color/brown_period_text"
+                    android:textSize="13sp"
+                    android:letterSpacing="0.05"
+                    android:background="@drawable/bg_period_badge"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/dropdownMenu"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:orientation="vertical"
+        android:background="@drawable/bg_dropdown_menu"
+        android:elevation="8dp"
+        android:padding="8dp"
+        android:layout_marginStart="24dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/itemDaily"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_dropdown_item"
+            android:padding="12dp"
+            android:minHeight="48dp"
+            android:layout_marginBottom="2dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@drawable/dot_indicator"
+                android:layout_marginEnd="10dp"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/period_daily"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/itemWeekly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_dropdown_item"
+            android:padding="12dp"
+            android:minHeight="48dp"
+            android:layout_marginBottom="2dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@drawable/dot_indicator"
+                android:layout_marginEnd="10dp"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/period_weekly"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/itemMonthly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_dropdown_item"
+            android:padding="12dp"
+            android:minHeight="48dp"
+            android:layout_marginBottom="2dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@drawable/dot_indicator"
+                android:layout_marginEnd="10dp"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/period_monthly"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/itemQuarterly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_dropdown_item"
+            android:padding="12dp"
+            android:minHeight="48dp"
+            android:layout_marginBottom="2dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@drawable/dot_indicator"
+                android:layout_marginEnd="10dp"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/period_quarterly"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/itemYearly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_dropdown_item"
+            android:padding="12dp"
+            android:minHeight="48dp"
+            android:layout_marginBottom="2dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@drawable/dot_indicator"
+                android:layout_marginEnd="10dp"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/period_yearly"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/itemCustom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_dropdown_item"
+            android:padding="12dp"
+            android:minHeight="48dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@drawable/dot_indicator"
+                android:layout_marginEnd="10dp"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/period_custom"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_page_label"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:text="@string/page_label_track"
+        android:textColor="@color/text_hint"
+        android:textSize="10sp"
+        android:letterSpacing="0.05"
+        android:elevation="3dp"
+        android:importantForAccessibility="no" />
+
+</FrameLayout>

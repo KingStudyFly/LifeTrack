@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 排除敏感数据备份：加密 SP 绑定 Android Keystore，跨设备无法解密；
+     SQLCipher 数据库密钥同样绑定设备，备份无意义且增加泄露面。 -->
+<full-backup-content>
+    <exclude domain="sharedpref" path="."/>
+    <exclude domain="database" path="."/>
+</full-backup-content>

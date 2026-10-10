@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- InsightFragment 默认推荐问题 -->
+    <string-array name="insight_default_suggestions">
+        <item>最近一周我有哪些情绪变化？</item>
+        <item>帮我分析一下最近的日记趋势</item>
+        <item>我最近最常记录的事情是什么？</item>
+        <item>给我一些改善心情的建议</item>
+        <item>总结一下我最近的生活状态</item>
+    </string-array>
+</resources>

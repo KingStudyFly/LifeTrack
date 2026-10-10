@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 跟随按钮 activated 状态自动切换文字/图标颜色：
+     activated=true（选中）→ 白色；activated=false（未选中）→ green_primary -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_activated="true" android:color="@color/white" />
+    <item android:color="@color/green_primary" />
+</selector>

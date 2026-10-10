@@ -1,0 +1,421 @@
+<resources>
+    <string name="app_name">LifeTrack</string>
+
+    <string name="tab_record">记录</string>
+    <string name="tab_schedule">待办</string>
+    <string name="tab_track">轨迹</string>
+    <string name="tab_diary">日记</string>
+    <string name="tab_profile">我的</string>
+    <string name="tab_insight">洞察</string>
+
+    <!-- 待办页 -->
+    <string name="schedule_title">待办</string>
+    <string name="schedule_subtitle">把想做的事，一件件完成</string>
+    <string name="schedule_all_day">全天</string>
+
+    <!-- 页面右上角装饰标签（spec: 10px, text-hint 色, 毛玻璃背景） -->
+    <string name="page_label_record">RECORD</string>
+    <string name="page_label_schedule">TODO</string>
+    <string name="todo_add_hint">添加一件要做的事…</string>
+    <string name="todo_add">添加待办</string>
+    <string name="todo_title_required">先写下待办内容</string>
+    <string name="todo_added">已添加</string>
+    <string name="todo_empty">还没有待办\n写下一件想完成的小事吧</string>
+    <string name="todo_progress_format">已完成 %1$d/%2$d</string>
+    <string name="todo_pending_format">待完成 · %1$d</string>
+    <string name="todo_completed_format">已完成 · %1$d</string>
+    <string name="todo_anytime">随时</string>
+    <string name="todo_from_diary">来自日记</string>
+    <string name="todo_toggle_done">切换完成状态</string>
+    <string name="todo_delete_title">删除这条待办？</string>
+    <string name="todo_delete">删除</string>
+    <string name="todo_tip_diary_source">保存日记时，AI 会自动把其中的待办提取到这里 · 长按待办可删除</string>
+
+    <!-- 桌面待办小组件 -->
+    <string name="widget_todo_title">LifeTrack · 待办</string>
+    <string name="widget_todo_description">在桌面直接查看未完成的待办</string>
+    <string name="widget_todo_count">%1$d 项未完成</string>
+    <string name="widget_todo_empty">暂时没有待办事项</string>
+    <string name="widget_todo_row_placeholder">待办事项</string>
+    <string name="widget_todo_status_pending">未完成</string>
+    <string name="widget_label">桌面小组件</string>
+    <string name="widget_settings_title">桌面小组件</string>
+    <string name="widget_add_hint">添加后可在桌面长按空白处选择「LifeTrack → 待办」再次添加。</string>
+    <string name="widget_bg_alpha_title">背景不透明度</string>
+    <string name="widget_bg_alpha_desc">0% 完全透明，100% 纯白。超过 50% 时文字会自动转为深色以保证可读。</string>
+    <string name="widget_alpha_value">%1$d%%</string>
+    <string name="widget_max_items_title">显示条数</string>
+    <string name="widget_max_items_desc">小组件最多展示的未完成待办数量</string>
+    <string name="widget_max_items_desc_value">最多展示 %1$d 条</string>
+    <string name="widget_preview_alpha">预览（下方棋盘格代表桌面壁纸）</string>
+    <string name="page_label_track">TRACK</string>
+    <string name="page_label_diary">DIARY</string>
+    <string name="page_label_insight">INSIGHT</string>
+    <string name="page_label_profile">PROFILE</string>
+
+    <string name="insight_title">洞察</string>
+    <string name="insight_subtitle">向 AI 提问，从日记中发现答案</string>
+    <string name="insight_input_hint">输入你的问题…</string>
+    <string name="insight_send">发送</string>
+    <string name="insight_analyzing">正在分析问题…</string>
+    <string name="insight_searching">正在检索日记…</string>
+    <string name="insight_thinking">正在思考回答…</string>
+    <string name="insight_no_diary">该时间段暂无日记记录</string>
+    <string name="insight_error">出错了：%s</string>
+    <string name="insight_welcome">你好！向我提问吧，我会根据你的日记来回答。\n例如：\"上周心情怎么样？\"、\"这个月做了哪些重要的事？\"</string>
+
+    <string name="record_title">记录</string>
+    <string name="record_subtitle">捕捉当下的思绪与灵感</string>
+    <string name="record_input_hint">睡眠，运动......</string>
+    <string name="record_tips_hint">💡 记得记录每天的睡眠、运动、正事哦~</string>
+    <string name="mode_image">图片识别</string>
+    <string name="mode_audio">音频识别</string>
+    <string name="mode_image_short">图片</string>
+    <string name="mode_audio_short">录音</string>
+    <string name="audio_recording">正在录音</string>
+    <string name="audio_recording_hint">请对着手机说话，点击按钮停止录音</string>
+    <string name="audio_stop_recording">停止录音</string>
+    <string name="audio_analyzing">正在识别语音…</string>
+    <string name="audio_analyze_success">语音识别完成，可编辑后保存</string>
+    <string name="audio_analyze_failed">语音识别失败：%s</string>
+    <string name="audio_permission_denied">需要麦克风权限才能录音</string>
+    <string name="audio_record_error">录音启动失败</string>
+    <string name="image_picker_title">选择图片来源</string>
+    <string name="image_picker_camera">拍照</string>
+    <string name="image_picker_gallery">从相册选择</string>
+    <string name="image_picker_cancel">取消</string>
+    <string name="permission_camera_denied">需要相机权限才能拍照</string>
+    <string name="permission_storage_denied">需要存储权限才能读取相册</string>
+    <string name="image_decode_failed">图片读取失败</string>
+    <string name="image_analyze_success">图片识别完成，可编辑后保存</string>
+    <string name="image_analyze_failed">图片识别失败：%s</string>
+    <string name="image_batch_analyzing">正在识别 %1$d/%2$d 张图片…</string>
+    <string name="image_batch_analyze_success">已完成 %1$d 张图片识别</string>
+    <string name="image_batch_partial_success">已识别 %1$d/%2$d 张图片，部分失败</string>
+    <string name="btn_save">保存记录</string>
+
+    <string name="track_title">轨迹</string>
+    <string name="track_subtitle">回望来时的路</string>
+    <string name="period_daily">每日总结</string>
+    <string name="period_weekly">每周总结</string>
+    <string name="period_monthly">月度总结</string>
+    <string name="period_quarterly">季度总结</string>
+    <string name="period_yearly">年度总结</string>
+    <string name="period_custom">任意时段</string>
+
+    <string name="card_today_title">今日概览</string>
+    <string name="card_today_desc">记录 3 条想法，完成 2 项任务，整体状态良好。</string>
+    <string name="card_insight_title">关键洞察</string>
+    <string name="card_insight_desc">今日的思考集中在工作规划与自我提升方面。</string>
+    <string name="card_suggestion_title">明日建议</string>
+    <string name="card_suggestion_desc">保持当前节奏，建议预留时间进行深度思考。</string>
+
+    <string name="dialog_success_title">保存成功</string>
+    <string name="dialog_success_message">你的记录已安全保存</string>
+    <string name="dialog_btn_ok">好的</string>
+    <string name="dialog_close">关闭</string>
+    <string name="save_error_empty">请先输入内容</string>
+
+    <string name="diary_title">日记总览</string>
+    <string name="diary_subtitle">翻阅过去的每一天</string>
+    <string name="diary_empty">这一天还没有日记记录\n去「记录」页写下你的想法吧</string>
+    <string name="diary_edit">编辑</string>
+    <string name="diary_edit_title">编辑日记</string>
+    <string name="diary_delete">删除</string>
+    <string name="diary_cancel">取消</string>
+    <string name="diary_save">保存</string>
+    <string name="diary_update_success">日记已更新</string>
+    <string name="diary_update_failed">更新失败</string>
+    <string name="diary_delete_success">日记已删除</string>
+    <string name="diary_delete_failed">删除失败</string>
+    <string name="diary_search_hint">搜索日记内容…</string>
+    <string name="diary_search_cancel">取消</string>
+    <string name="diary_search_empty">没有找到匹配的日记</string>
+    <string name="diary_search_result_count">找到 %d 条结果</string>
+
+    <string name="profile_title">我的</string>
+    <string name="profile_default_name">旅行者</string>
+    <string name="profile_default_bio">记录生活，感受成长</string>
+    <string name="profile_stat_records">记录</string>
+    <string name="profile_stat_days">天数</string>
+    <string name="profile_stat_streak">连续</string>
+    <string name="profile_api_title">系统状态</string>
+    <string name="profile_api_desc">检测云服务器与 AI 服务连接状态</string>
+    <string name="profile_api_verify">验证 AI 连接</string>
+    <string name="profile_api_verifying">验证中…</string>
+    <string name="dialog_verify_success_title">连接成功</string>
+    <string name="dialog_verify_fail_title">连接失败</string>
+    <string name="verify_service_analyzer">分析器连接</string>
+    <string name="verify_status_ok">已连接</string>
+    <string name="verify_status_fail">连接失败</string>
+    <string name="dialog_analyzing_title">分析中</string>
+    <string name="dialog_analyzing_message">正在分析日记内容，判断记录日期…</string>
+    <string name="save_ai_date_detected">识别日期：%s</string>
+    <string name="save_ai_multi_date_detected">识别 %1$d 个日期：%2$s</string>
+    <string name="save_ai_fallback_today">分析失败，已保存至今日</string>
+    <string name="track_no_entries">该时段暂无日记记录\n去「记录」页写下你的想法吧</string>
+    <string name="track_no_ai">连接 AI 以生成智能总结\n前往「我的」页面配置 API Key</string>
+    <string name="track_generating">正在生成总结…</string>
+    <string name="track_generating_streaming">正在生成总结，请稍候…</string>
+    <string name="track_cached_hint">（缓存）</string>
+    <string name="custom_period_hint_start">开始日期</string>
+    <string name="custom_period_hint_end">结束日期</string>
+    <string name="custom_period_confirm">确定</string>
+    <string name="profile_menu_export">数据导出</string>
+    <string name="profile_menu_export_desc">查看使用数据与统计</string>
+    <string name="profile_menu_preferences">偏好设置</string>
+    <string name="profile_menu_preferences_desc">主题、通知与显示</string>
+    <string name="profile_menu_about">关于</string>
+    <string name="profile_menu_about_desc">版本信息与帮助</string>
+    <string name="profile_version">LifeTrack v1.0.0</string>
+    <string name="profile_author">Wizard091 zzl0529</string>
+
+    <string name="profile_usage_title">使用数据</string>
+    <string name="profile_usage_total_duration">累计时长</string>
+    <string name="profile_usage_total_opens">打开次数</string>
+    <string name="profile_usage_days_used">使用天数</string>
+    <string name="profile_usage_today_opens">今日打开</string>
+    <string name="profile_usage_today_duration">今日时长</string>
+    <string name="profile_usage_avg_duration">平均时长</string>
+
+    <string name="usage_detail_title">使用数据</string>
+    <string name="usage_feature_title">模块使用</string>
+    <string name="usage_recent_title">近7天</string>
+
+    <string name="profile_feature_in_development">功能开发中</string>
+
+    <string name="profile_menu_more">更多</string>
+    <string name="profile_avatar">头像</string>
+    <string name="cd_back">返回</string>
+    <string name="cd_paid">付费</string>
+    <string name="cd_prev_month">上一月</string>
+    <string name="cd_next_month">下一月</string>
+    <string name="cd_dropdown">下拉</string>
+    <string name="cd_prev_period">上一个周期</string>
+    <string name="cd_next_period">下一个周期</string>
+
+    <string name="export_diary_title">导出日记</string>
+    <string name="export_diary_desc">将所有日记导出为文件</string>
+    <string name="export_diary_btn">导出日记</string>
+    <string name="export_diary_progress">正在导出…</string>
+    <string name="export_diary_success">已导出 %d 条日记</string>
+    <string name="export_diary_empty">没有可导出的日记</string>
+    <string name="export_diary_failed">导出失败</string>
+    <string name="import_diary_title">读取日记</string>
+    <string name="import_diary_desc">从导出文件读取日记</string>
+    <string name="import_diary_btn">读取日记</string>
+    <string name="import_diary_progress">正在读取…</string>
+    <string name="import_diary_success">已读取 %d 条日记</string>
+    <string name="import_diary_failed">读取失败</string>
+    <string name="import_diary_invalid_file">文件格式无效</string>
+    <string name="import_diary_confirm_title">读取日记</string>
+    <string name="import_diary_confirm_message">检测到 %d 条日记，是否导入？</string>
+    <string name="import_diary_confirm_ok">导入</string>
+    <string name="import_diary_confirm_cancel">取消</string>
+    <string name="month_picker_title">选择年月</string>
+    <string name="month_picker_confirm">确定</string>
+    <string name="month_picker_cancel">取消</string>
+    <string name="year_label">年</string>
+    <string name="month_label">月</string>
+
+    <string name="login_title">登录</string>
+    <string name="login_hint_email">请输入邮箱</string>
+    <string name="login_hint_password">请输入密码</string>
+    <string name="login_forgot_password">忘记密码？</string>
+    <string name="login_btn_login">登录</string>
+    <string name="login_register_hint">还没有账号？</string>
+    <string name="login_register_link">立即注册</string>
+
+    <!-- Splash & 通用 -->
+    <string name="splash_tagline">记录生活 · 感受成长</string>
+    <string name="app_version">v1.0.0</string>
+    <string name="feature_coming_soon">功能开发中</string>
+    <string name="error_data_error">数据异常</string>
+    <string name="btn_toggle_password_desc">切换密码可见性</string>
+    <string name="icon_hourglass">⏳</string>
+
+    <!-- 登录 -->
+    <string name="activity_login_input_empty">请输入邮箱和密码</string>
+
+    <!-- 单位 -->
+    <string name="unit_count">次</string>
+    <string name="unit_hour">%1$d h</string>
+    <string name="unit_minute">%1$d m</string>
+
+    <!-- 星期 -->
+    <string name="week_mon">一</string>
+    <string name="week_tue">二</string>
+    <string name="week_wed">三</string>
+    <string name="week_thu">四</string>
+    <string name="week_fri">五</string>
+    <string name="week_sat">六</string>
+    <string name="week_sun">日</string>
+
+    <!-- 日记编辑 -->
+    <string name="hint_diary_content">输入日记内容…</string>
+
+    <!-- 记录页 -->
+    <string name="record_all_images_failed">图片识别失败</string>
+    <string name="record_tagging_started">正在为日记打标签…</string>
+    <string name="record_tagging_success">已为日记打上标签</string>
+    <string name="record_tagging_failed">标签生成失败，可在"我的"中补全</string>
+
+    <!-- 小回顾 -->
+    <string name="flashback_theme_prefix">今日主题</string>
+    <string name="flashback_refresh">换一批</string>
+    <string name="flashback_empty_hint">坚持记录，回忆即将解锁</string>
+    <string name="flashback_loading">小回顾加载中…</string>
+    <string name="flashback_no_data">暂无已打标签的日记，先去记录吧</string>
+    <string name="flashback_reflection_count_format">已有 %1$d 条感想</string>
+
+    <!-- 回顾感想对话框 -->
+    <string name="reflection_list_title">我的感想</string>
+    <string name="reflection_empty_hint">写下你现在的想法…</string>
+    <string name="reflection_input_hint">对这篇日记，现在的我想说…</string>
+    <string name="reflection_save">保存感想</string>
+    <string name="reflection_cancel">关闭</string>
+    <string name="reflection_delete">删除</string>
+    <string name="reflection_saved">感想已保存</string>
+    <string name="reflection_deleted">感想已删除</string>
+    <string name="reflection_empty_content">请输入感想内容</string>
+
+    <!-- 我的页：标签补全 -->
+    <string name="profile_tag_fill_title">补全日记标签</string>
+    <string name="profile_tag_fill_summary_format">发现 %1$d 条未标记日记</string>
+    <string name="profile_tag_fill_nothing">所有日记都已打标签</string>
+    <string name="profile_tag_fill_confirm">用 AI 补全标签？</string>
+    <string name="profile_tag_fill_progress_format">处理中… %1$d/%2$d</string>
+    <string name="profile_tag_fill_done_format">完成，成功 %1$d 条，失败 %2$d 条</string>
+    <string name="record_save_db_error">记录保存失败，请稍后重试</string>
+    <string name="record_save_success_format">已保存至 %1$s</string>
+    <string name="record_audio_file_not_exist">音频文件不存在</string>
+    <string name="record_audio_file_too_large_format">音频文件过大（%1$s），请控制在 1 分钟以内</string>
+    <string name="record_recognition_empty">未识别到语音内容</string>
+    <string name="record_read_audio_failed_format">音频读取失败：%1$s</string>
+
+    <!-- 轨迹页 Tab 标签 -->
+    <string name="track_tab_summary">总结</string>
+    <string name="track_tab_exercise">运动</string>
+    <string name="track_tab_sleep">睡眠</string>
+    <string name="track_tab_social">社交</string>
+    <string name="track_tab_placeholder_main">即将上线</string>
+    <string name="track_tab_placeholder_sub">该维度数据正在准备中</string>
+
+    <!-- 轨迹页 - 维度 Tab -->
+    <string name="track_dim_period_month">本月</string>
+    <string name="track_dim_period_3month">近三个月</string>
+    <string name="track_dim_load_history">读取过往日记</string>
+    <string name="track_dim_loading_history">正在读取过往日记…</string>
+    <string name="track_dim_empty">暂无数据，点击下方按钮读取过往日记</string>
+    <string name="track_dim_empty_exercise">本月暂无运动记录</string>
+    <string name="track_dim_empty_sleep">本月暂无睡眠记录</string>
+    <string name="track_dim_empty_social">近三个月暂无社交记录</string>
+    <string name="track_dim_analyzing">分析中…</string>
+    <string name="track_dim_no_analysis">点击查看分析</string>
+    <string name="track_exercise_chart_title">运动强度趋势</string>
+    <string name="track_exercise_types_title">运动类型统计</string>
+    <string name="track_exercise_progress_title">运动能力进步分析</string>
+    <string name="track_sleep_chart_title">睡眠质量趋势</string>
+    <string name="track_sleep_stats_title">睡眠分数统计</string>
+    <string name="track_sleep_factors_title">恶性睡眠影响因素</string>
+    <string name="track_social_title">重要人物交流</string>
+    <string name="track_dim_confirm_load_history">将遍历所有历史日记，由 AI 逐篇打维度分，可能耗时数分钟，是否继续？</string>
+    <string name="track_dim_load_progress">已处理 %1$d / %2$d 篇</string>
+    <string name="track_dim_load_complete">完成，共处理 %1$d 篇日记</string>
+    <string name="track_dim_avg_score">本月均分</string>
+    <string name="track_dim_max_score">最高分</string>
+    <string name="track_dim_min_score">最低分</string>
+
+    <!-- 轨迹页 -->
+    <string name="track_insight_tags_title">关键标签</string>
+    <string name="track_turning_points">转折点</string>
+    <string name="track_empty_period_main">该时段暂无记录</string>
+    <string name="track_empty_period_sub">去「记录」页写下你的想法吧</string>
+    <string name="track_custom_period_prompt">请选择起止日期</string>
+    <string name="track_ai_failed_format">生成失败：%1$s</string>
+    <string name="track_period_label_format">%1$s · %2$s</string>
+    <string name="track_period_label_custom_format">@string/track_period_label_format</string>
+    <string name="track_weekly_summary_label">周报</string>
+    <string name="track_monthly_summary_label">月报</string>
+    <string name="track_raw_diary_section_format">【%1$s】</string>
+    <string name="track_life_stage_format">%1$s阶段</string>
+    <string name="track_dim_mood">心情</string>
+    <string name="track_dim_energy">精力</string>
+    <string name="track_dim_social">社交</string>
+    <string name="track_dim_pressure">压力</string>
+    <string name="track_dim_health">健康</string>
+    <string name="track_date_format_full">yyyy年MM月dd日</string>
+    <string name="track_date_format_year_month">yyyy年MM月</string>
+    <string name="track_week_badge_format">%1$d 年第 %2$d 周</string>
+    <string name="track_quarter_badge_format">%1$d Q%2$d</string>
+    <string name="track_year_badge_format">%1$d 年</string>
+    <string name="track_month_value_format">%1$d月</string>
+    <string name="track_select_period">选择周期</string>
+    <string name="track_select_year_month">选择年月</string>
+    <string name="track_select_year_quarter">选择季度</string>
+    <string name="track_select_year">选择年份</string>
+    <string name="track_regenerate">重新总结</string>
+    <string name="track_regenerate_confirm">重新生成本周期的总结？将清除现有缓存并重新调用 AI。</string>
+    <string name="track_regenerate_confirm_ok">重新生成</string>
+    <string name="track_regenerate_no_ai">连接 AI 以生成智能总结</string>
+    <string name="cd_regenerate">重新总结</string>
+
+    <!-- 主题切换 -->
+    <string name="profile_menu_theme">深色模式</string>
+    <string name="profile_menu_theme_desc">切换深色/浅色显示</string>
+    <string name="theme_dialog_title">选择主题模式</string>
+    <string name="theme_mode_light">浅色</string>
+    <string name="theme_mode_dark">深色</string>
+    <string name="theme_mode_system">跟随系统</string>
+
+    <!-- AI 洞察状态消息 -->
+    <string name="insight_status_filtering">正在筛选相关日记…</string>
+    <string name="insight_status_compressing">正在压缩日记内容…</string>
+
+    <!-- 个人页文案 -->
+    <string name="profile_avatar_coming">头像功能即将上线</string>
+    <string name="profile_avatar_changed">头像已更新</string>
+    <string name="profile_avatar_load_failed">头像加载失败</string>
+    <string name="profile_avatar_save_failed">头像保存失败</string>
+    <string name="profile_avatar_picker_failed">图片读取失败</string>
+    <string name="profile_verify_all_failed">均无法连接</string>
+    <string name="profile_verify_connect_failed">连接失败</string>
+
+    <!-- 录音中断提示 -->
+    <string name="record_audio_interrupted">录音已中断，请重新录制</string>
+
+    <!-- 格式化字符串 -->
+    <string name="track_quarter_format">Q%1$d</string>
+    <string name="diary_month_format">%1$d月</string>
+
+    <!-- 定时提醒 -->
+    <string name="profile_menu_notification">定时提醒</string>
+    <string name="profile_menu_notification_desc">每日定点通知与文案</string>
+    <string name="notification_list_title">定时提醒</string>
+    <string name="notification_add">添加</string>
+    <string name="notification_dialog_title">定时提醒</string>
+    <string name="notification_add_title">新建提醒</string>
+    <string name="notification_edit_title">编辑提醒</string>
+    <string name="notification_save">保存</string>
+    <string name="notification_delete">删除</string>
+    <string name="notification_time_label">提醒时间</string>
+    <string name="notification_content_label">提醒内容</string>
+    <string name="notification_content_hint">想被提醒什么？</string>
+    <string name="notification_default_content">记录今天的想法</string>
+    <string name="notification_added">已添加 %1$s 提醒</string>
+    <string name="notification_updated">已更新 %1$s 提醒</string>
+    <string name="notification_deleted">已删除</string>
+    <string name="notification_content_empty">提醒内容不能为空</string>
+    <string name="notification_empty_title">还没有定时提醒</string>
+    <string name="notification_empty_desc">点击右上角 + 添加一条</string>
+    <string name="notification_alarm_enabled">已开启定时提醒</string>
+    <string name="notification_alarm_disabled">已关闭定时提醒</string>
+    <string name="notification_alarm_failed">操作失败，请重试</string>
+    <string name="notification_delete_failed">删除失败，请重试</string>
+    <string name="notification_permission_required">需要通知权限才能发送提醒</string>
+    <string name="notification_autostart_title">开启自启动权限</string>
+    <string name="notification_autostart_message">为保证 App 退出后仍能到点提醒，请在系统设置中允许 LifeTrack 自启动与后台运行（国产手机必需，一次性设置）。</string>
+    <string name="notification_autostart_go_settings">去设置</string>
+    <string name="notification_autostart_later">稍后</string>
+    <string name="notification_autostart_open_failed">无法打开设置页，请手动前往系统设置开启自启动</string>
+</resources>
