@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LifeTrack 静态毛玻璃预览（安卓可 1:1 落地版）</title>
+<style>
+/* ============================================================
+   核心思路（对照安卓实现）：
+   Layer 1  预渲染模糊背景 —— 模拟 bg_frosted 位图
+            （多层 radial-gradient 近似高斯模糊后的观感，完全静止，零渲染成本）
+   Layer 2  色块层         —— 模拟 bg_glass_blobs（极淡，可选）
+   Layer 3  玻璃元素       —— 模拟 bg_card / glass_input / bg_page_label
+            （只是半透明色 + 细边框 + 阴影，不使用 backdrop-filter）
+   ============================================================ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* 与 colors.xml 对齐 */
+  --bg-primary: #FAF8F5;
+  --bg-card: rgba(255,255,255,0.88);
+  --bg-card-solid: #FFFFFF;
+  --bg-input: rgba(255,255,255,0.55);
+  --bg-page-label: rgba(255,255,255,0.55);
+  --bg-nav: rgba(250,248,245,0.78);
+  --green-primary: #8B9A7D;
+  --green-dark: #7A8A6C;
+  --brown-accent: #B8A99A;
+  --brown-light: #C4A77D;
+  --text-primary: #1A1A1A;
+  --text-secondary: #666666;
+  --text-hint: #BBBBBB;
+  --border-subtle: rgba(232,228,223,0.6);
+  --glass-border: rgba(255,255,255,0.55);
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.05), 0 6px 20px rgba(0,0,0,0.06);
+  --nav-shadow: 0 -1px 0 rgba(15,0,0,0.04), 0 -8px 24px rgba(0,0,0,0.04);
+  /* 模拟 bg_frosted 的色斑（模糊后的大色块） */
+  --f1: rgba(139,154,125,0.32);   /* green_primary */
+  --f2: rgba(196,167,125,0.30);   /* brown_light */
+  --f3: rgba(167,196,160,0.28);   /* 辅助淡绿 */
+  --f4: rgba(184,169,154,0.30);   /* brown_accent */
+  --f5: rgba(212,183,141,0.26);   /* brown_dropdown */
+}
+
+.dark {
+  --bg-primary: #121212;
+  --bg-card: rgba(30,30,30,0.88);
+  --bg-card-solid: #1E1E1E;
+  --bg-input: rgba(42,42,42,0.55);
+  --bg-page-label: rgba(42,42,42,0.55);
+  --bg-nav: rgba(18,18,18,0.80);
+  --green-primary: #9DAD8E;
+  --green-dark: #8B9A7D;
+  --brown-accent: #C8B9AA;
+  --brown-light: #D4B78D;
+  --text-primary: #F5F5F5;
+  --text-secondary: #B0B0B0;
+  --text-hint: #666666;
+  --border-subtle: rgba(90,90,90,0.45);
+  --glass-border: rgba(255,255,255,0.10);
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  --nav-shadow: 0 -1px 0 rgba(255,255,255,0.06), 0 -8px 24px rgba(0,0,0,0.3);
+  --f1: rgba(157,173,142,0.20);
+  --f2: rgba(212,183,141,0.16);
+  --f3: rgba(167,196,160,0.14);
+  --f4: rgba(200,185,170,0.16);
+  --f5: rgba(212,183,141,0.12);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #ECE9E4;
+  color: #1A1A1A;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 20px 48px;
+}
+/* 深色模式下的外围画布同步变暗，保证说明面板可读 */
+html.dark body { background: #191919; color: #E8E8E8; }
+html.dark .topbar h1 { color: #F0F0F0; }
+html.dark .topbar .sub { color: #999; }
+html.dark .btn { background: #2A2A2A; color: #DDD; border-color: rgba(255,255,255,0.16); }
+html.dark .btn.active { background: #8B9A7D; color: #fff; }
+html.dark .notes { color: #BBB; }
+html.dark .notes h2 { color: #E5E5E5; }
+html.dark .notes code { background: rgba(157,173,142,0.18); color: #9DAD8E; }
+html.dark .layer-legend { background: #222; border-color: rgba(255,255,255,0.1); }
+html.dark .layer-legend .lg { border-bottom-color: rgba(255,255,255,0.07); }
+html.dark .conclusion { background: rgba(157,173,142,0.12); color: #9DAD8E; }
+
+/* ---------- 顶栏 ---------- */
+.topbar {
+  width: 100%;
+  max-width: 1060px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.topbar h1 { font-size: 18px; font-weight: 600; letter-spacing: 0.5px; }
+.topbar .sub { font-size: 12.5px; color: #777; margin-top: 4px; }
+.controls { display: flex; gap: 10px; }
+.btn {
+  border: 1px solid rgba(0,0,0,0.14);
+  background: #fff;
+  color: #333;
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .2s, box-shadow .2s;
+}
+.btn:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+.btn.active {
+  background: #8B9A7D;
+  border-color: #8B9A7D;
+  color: #fff;
+}
+
+/* ---------- 主区 ---------- */
+.main {
+  display: flex;
+  gap: 36px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ---------- 手机框 ---------- */
+.phone {
+  position: relative;
+  width: 400px;
+  height: 860px;
+  border-radius: 42px;
+  overflow: hidden;
+  background: var(--bg-primary);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.18), 0 0 0 10px #1d1d1f, 0 0 0 12px #333;
+  flex-shrink: 0;
+  transition: background .35s;
+}
+
+/* Layer 1：预渲染模糊背景（模拟 bg_frosted —— 一张静态位图） */
+.layer-frost {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* 多层径向渐变 ≈ 高斯模糊后的大色斑，天然柔和、完全静止 */
+  background:
+    radial-gradient(420px 420px at 8% 4%,   var(--f1) 0%, transparent 62%),
+    radial-gradient(380px 380px at 96% 18%, var(--f2) 0%, transparent 60%),
+    radial-gradient(360px 360px at 4% 46%,  var(--f3) 0%, transparent 58%),
+    radial-gradient(400px 400px at 90% 62%, var(--f4) 0%, transparent 60%),
+    radial-gradient(340px 340px at 30% 96%, var(--f5) 0%, transparent 58%),
+    radial-gradient(300px 300px at 60% 30%, var(--f3) 0%, transparent 55%);
+}
+
+/* Layer 2：极淡色块（模拟 bg_glass_blobs，静态无动画） */
+.layer-blobs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(160px 160px at 78% 8%,  rgba(200,185,170,0.18) 0%, transparent 70%),
+    radial-gradient(140px 140px at 12% 74%, rgba(167,196,160,0.16) 0%, transparent 70%),
+    radial-gradient(120px 120px at 50% 88%, rgba(212,183,141,0.14) 0%, transparent 70%);
+}
+
+/* Layer 3：界面内容 */
+.screen {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 46px 18px 0;
+  color: var(--text-primary);
+}
+
+.statusbar {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-secondary);
+  padding: 0 8px 6px;
+  opacity: .9;
+}
+
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 6px 4px 14px;
+}
+.page-title { font-size: 22px; font-weight: 700; letter-spacing: .3px; }
+.page-label {
+  /* 对应 bg_page_label：8dp 圆角玻璃小标签 */
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-secondary);
+  background: var(--bg-page-label);
+  border: 0.5px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 4px 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.scroll-area { flex: 1; overflow-y: auto; padding-bottom: 108px; }
+.scroll-area::-webkit-scrollbar { width: 0; }
+
+/* ---------- 玻璃卡片 ---------- */
+.card {
+  background: var(--bg-card);
+  border: 0.5px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
+  padding: 16px;
+  margin-bottom: 14px;
+  transition: background .35s;
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green-primary); }
+
+/* 输入区（对应 glass_input） */
+.input-box {
+  width: 100%;
+  min-height: 96px;
+  border: none;
+  outline: none;
+  resize: none;
+  font: 14px/1.7 inherit;
+  color: var(--text-primary);
+  background: var(--bg-input);
+  border-radius: 14px;
+  border: 0.5px solid var(--border-subtle);
+  padding: 12px 14px;
+  transition: background .35s;
+}
+.input-box::placeholder { color: var(--text-hint); }
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+.icon-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 0.5px solid var(--border-subtle);
+  background: var(--bg-input);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+.icon-btn svg { width: 17px; height: 17px; }
+.icon-btn:active { transform: scale(.94); }
+.send-btn {
+  margin-left: auto;
+  height: 38px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 999px;
+  background: var(--green-primary);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(139,154,125,0.35);
+}
+.send-btn:active { transform: scale(.97); }
+
+/* chip 行 */
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.chip {
+  font-size: 12px;
+  color: #5A7A55;
+  background: rgba(139,154,125,0.16);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+.dark .chip { color: #9DAD8E; background: rgba(157,173,142,0.16); }
+
+/* 时间线 */
+.tl-item { display: flex; gap: 12px; margin-bottom: 14px; }
+.tl-item:last-child { margin-bottom: 0; }
+.tl-time {
+  font-size: 11px;
+  color: var(--text-hint);
+  min-width: 40px;
+  padding-top: 3px;
+  font-variant-numeric: tabular-nums;
+}
+.tl-line { display: flex; flex-direction: column; align-items: center; }
+.tl-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green-primary);
+  box-shadow: 0 0 0 3px rgba(139,154,125,0.18);
+}
+.tl-item:nth-child(2) .tl-dot { background: var(--brown-light); box-shadow: 0 0 0 3px rgba(196,167,125,0.18); }
+.tl-item:nth-child(3) .tl-dot { background: var(--brown-accent); box-shadow: 0 0 0 3px rgba(184,169,154,0.18); }
+.tl-content {
+  flex: 1;
+  background: rgba(255,255,255,0.5);
+  border: 0.5px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+.dark .tl-content { background: rgba(42,42,42,0.5); }
+.tl-meta { font-size: 11px; color: var(--text-hint); margin-top: 4px; }
+
+/* 情绪小条（呼应 DimensionChartView） */
+.mood-row { display: flex; align-items: flex-end; gap: 8px; height: 56px; }
+.mood-bar {
+  flex: 1;
+  border-radius: 6px 6px 4px 4px;
+  background: linear-gradient(180deg, var(--green-primary), rgba(139,154,125,0.35));
+  opacity: .85;
+}
+.dark .mood-bar { background: linear-gradient(180deg, #9DAD8E, rgba(157,173,142,0.3)); }
+.mood-labels { display: flex; gap: 8px; margin-top: 6px; }
+.mood-labels span { flex: 1; text-align: center; font-size: 10px; color: var(--text-hint); }
+
+/* ---------- 底部导航（玻璃，无 blur） ---------- */
+.bottom-nav {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  background: var(--bg-nav);
+  border-top: 0.5px solid var(--border-subtle);
+  box-shadow: var(--nav-shadow);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 8px 26px;
+  transition: background .35s;
+}
+.nav-item {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  color: var(--text-hint);
+  font-size: 10.5px;
+  cursor: pointer;
+  user-select: none;
+}
+.nav-item svg { width: 22px; height: 22px; }
+.nav-item.active { color: var(--green-primary); font-weight: 600; }
+
+/* ---------- 实时模糊对比模式 ---------- */
+/* 结论：视觉几乎一致，但实时模式在安卓上每帧都要重算 —— 这就是卡顿来源 */
+.phone.live .card,
+.phone.live .bottom-nav,
+.phone.live .page-label,
+.phone.live .input-box,
+.phone.live .tl-content {
+  backdrop-filter: blur(18px) saturate(1.15);
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
+}
+.phone.live { outline: 3px solid #C0392B; outline-offset: -3px; }
+.live-badge {
+  display: none;
+  position: absolute;
+  top: 14px; left: 50%;
+  transform: translateX(-50%);
+  background: #C0392B;
+  color: #fff;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  z-index: 10;
+  letter-spacing: 1px;
+}
+.phone.live .live-badge { display: block; }
+
+/* ---------- 右侧说明面板 ---------- */
+.notes {
+  width: 330px;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: #444;
+}
+.notes h2 { font-size: 15px; margin-bottom: 12px; color: #222; }
+.notes .block { margin-bottom: 18px; }
+.notes .swatch-row { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+.notes .swatch { width: 14px; height: 14px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.12); flex-shrink: 0; }
+.notes code {
+  font-family: Consolas, monospace;
+  font-size: 12px;
+  background: rgba(139,154,125,0.14);
+  color: #4E6247;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.layer-legend {
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 14px;
+  background: #fff;
+  overflow: hidden;
+}
+.layer-legend .lg {
+  display: flex;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.layer-legend .lg:last-child { border-bottom: none; }
+.lg .tag {
+  flex-shrink: 0;
+  width: 58px;
+  height: 22px;
+  border-radius: 6px;
+  font-size: 11px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  font-weight: 600;
+}
+.tag.t1 { background: #8B9A7D; }
+.tag.t2 { background: #B8A99A; }
+.tag.t3 { background: #C4A77D; }
+.conclusion {
+  background: rgba(139,154,125,0.10);
+  border-left: 3px solid #8B9A7D;
+  padding: 10px 14px;
+  border-radius: 0 10px 10px 0;
+  font-size: 12.5px;
+  color: #4E6247;
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <h1>LifeTrack · 静态毛玻璃预览</h1>
+    <div class="sub">背景为"预渲染模糊图"（静止），玻璃层仅半透明色 —— 安卓端可 1:1 落地，零渲染成本</div>
+  </div>
+  <div class="controls">
+    <button class="btn" id="themeBtn">深色模式</button>
+    <button class="btn" id="liveBtn">对比：实时模糊</button>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ===================== 手机预览 ===================== -->
+  <div class="phone" id="phone">
+    <div class="live-badge">LIVE · backdrop-filter 每帧重算</div>
+
+    <!-- Layer 1：预渲染模糊背景（≈ bg_frosted 静态位图） -->
+    <div class="layer-frost"></div>
+    <!-- Layer 2：极淡色块（≈ bg_glass_blobs） -->
+    <div class="layer-blobs"></div>
+
+    <!-- Layer 3：界面内容 -->
+    <div class="screen">
+      <div class="statusbar">
+        <span>9:41</span>
+        <span>●●● ● Wi-Fi ▮▮</span>
+      </div>
+
+      <div class="page-head">
+        <div class="page-title">记录</div>
+        <div class="page-label">RECORD</div>
+      </div>
+
+      <div class="scroll-area">
+
+        <!-- 输入卡片 -->
+        <div class="card">
+          <textarea class="input-box" placeholder="此刻在想什么？写下来吧…"></textarea>
+          <div class="input-row">
+            <div class="icon-btn" title="拍照">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </div>
+            <div class="icon-btn" title="相册">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+            <div class="icon-btn" title="语音">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+            </div>
+            <button class="send-btn">保存</button>
+          </div>
+        </div>
+
+        <!-- 标签 chips -->
+        <div class="chips">
+          <span class="chip"># 工作</span>
+          <span class="chip"># 健康</span>
+          <span class="chip"># 灵感</span>
+          <span class="chip">＋ 标签</span>
+        </div>
+
+        <!-- 今日时间线 -->
+        <div class="card">
+          <div class="card-title"><span class="dot"></span>今日 · 3 条记录</div>
+          <div class="tl-item">
+            <span class="tl-time">09:12</span>
+            <div class="tl-line"><span class="tl-dot"></span></div>
+            <div class="tl-content">
+              早晨跑了 5 公里，配速比上周快了 15 秒，状态不错。
+              <div class="tl-meta">图片 ×2 · #健康</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-time">13:40</span>
+            <div class="tl-line"><span class="tl-dot"></span></div>
+            <div class="tl-content">
+              和产品组开了需求评审会，确认了洞察模块下周进入开发。
+              <div class="tl-meta">#工作</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-time">21:05</span>
+            <div class="tl-line"><span class="tl-dot"></span></div>
+            <div class="tl-content">
+              读完了《置身事内》第三章，对土地财政有了新的理解。
+              <div class="tl-meta">#灵感</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 情绪趋势 -->
+        <div class="card">
+          <div class="card-title"><span class="dot"></span>本周情绪</div>
+          <div class="mood-row">
+            <div class="mood-bar" style="height: 42%"></div>
+            <div class="mood-bar" style="height: 66%"></div>
+            <div class="mood-bar" style="height: 52%"></div>
+            <div class="mood-bar" style="height: 88%"></div>
+            <div class="mood-bar" style="height: 74%"></div>
+            <div class="mood-bar" style="height: 60%"></div>
+            <div class="mood-bar" style="height: 90%"></div>
+          </div>
+          <div class="mood-labels">
+            <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <div class="bottom-nav">
+      <div class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <span>记录</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span>追踪</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>日记</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        <span>洞察</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>我的</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== 说明面板 ===================== -->
+  <aside class="notes">
+    <h2>三层结构 → 安卓资源映射</h2>
+    <div class="layer-legend">
+      <div class="lg">
+        <span class="tag t1">Layer 1</span>
+        <div>预渲染模糊背景（静止）<br>对应 <code>bg_frosted</code>：启动时把色斑模糊成一张位图，之后永不再算。</div>
+      </div>
+      <div class="lg">
+        <span class="tag t2">Layer 2</span>
+        <div>极淡色块层<br>对应 <code>bg_glass_blobs</code>：纯半透明色块，<b>不需要</b> filter:blur。</div>
+      </div>
+      <div class="lg">
+        <span class="tag t3">Layer 3</span>
+        <div>玻璃元素<br>对应 <code>bg_card</code> / <code>glass_input</code> / <code>bg_page_label</code>：半透明色 + 0.5dp 细边框 + 阴影。</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>为什么这个版本能流畅落地</h2>
+      旧预览的色块用了 <code>filter: blur(100px)</code> + 浮动动画 —— 这部分安卓复现不了。
+      本页把"模糊感"全部收进 <b>Layer 1 的一张静态图</b>（radial-gradient 天然近似高斯模糊的观感），
+      其余层只是叠半透明色，GPU 只做合成，不重算。
+    </div>
+
+    <div class="block">
+      <h2>对比实验</h2>
+      点右上角 <b>「对比：实时模糊」</b>，手机框会切到 <code>backdrop-filter</code> 实时模糊。
+      你会发现视觉效果几乎没差别 —— 但在安卓上，右边那版每一帧都要截图 + 重算模糊，正是当年卡顿的根源。
+    </div>
+
+    <div class="block">
+      <h2>配色（取自 colors.xml）</h2>
+      <div class="swatch-row"><span class="swatch" style="background:#8B9A7D"></span>green_primary <code>#8B9A7D</code></div>
+      <div class="swatch-row"><span class="swatch" style="background:#C4A77D"></span>brown_light <code>#C4A77D</code></div>
+      <div class="swatch-row"><span class="swatch" style="background:#B8A99A"></span>brown_accent <code>#B8A99A</code></div>
+      <div class="swatch-row"><span class="swatch" style="background:#FAF8F5"></span>bg_primary <code>#FAF8F5</code>（深色 <code>#121212</code>）</div>
+    </div>
+
+    <div class="conclusion">
+      结论：你要的效果 = 「一张模糊的背景图 + 半透明玻璃层」。这在安卓上是<b>零成本</b>的，
+      和 HTML 预览的差距只差"把背景模糊做成一张预渲染位图"。
+    </div>
+  </aside>
+</div>
+
+<script>
+// 主题切换（浅色 / 深色）
+const themeBtn = document.getElementById('themeBtn');
+themeBtn.addEventListener('click', () => {
+  const dark = document.documentElement.classList.toggle('dark');
+  themeBtn.textContent = dark ? '浅色模式' : '深色模式';
+  themeBtn.classList.toggle('active', dark);
+});
+
+// 实时模糊对比：给手机框加 .live，启用 backdrop-filter
+const liveBtn = document.getElementById('liveBtn');
+const phone = document.getElementById('phone');
+liveBtn.addEventListener('click', () => {
+  const live = phone.classList.toggle('live');
+  liveBtn.classList.toggle('active', live);
+  liveBtn.textContent = live ? '返回：静态模糊' : '对比：实时模糊';
+});
+
+// 底部导航 tab 切换（纯预览交互）
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
