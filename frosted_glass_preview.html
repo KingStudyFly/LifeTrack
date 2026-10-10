@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>LifeTrack 毛玻璃效果预览</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #FAF8F5;
+  --bg-card: rgba(255,255,255,0.66);
+  --bg-card-inner: rgba(255,255,255,0.62);
+  --bg-card-hover: rgba(255,255,255,0.76);
+  --bg-input: rgba(255,255,255,0.55);
+  --bg-nav: rgba(250,248,245,0.68);
+  --bg-dialog: rgba(255,255,255,0.76);
+  --bg-dropdown: rgba(255,255,255,0.85);
+  --bg-placeholder: #F5F3F0;
+  --green-primary: #8B9A7D;
+  --green-dark: #7A8A6C;
+  --brown-accent: #B8A99A;
+  --brown-light: #C4A77D;
+  --brown-dropdown: #D4C5B5;
+  --brown-period-text: #8B7355;
+  --text-primary: #1A1A1A;
+  --text-secondary: #666666;
+  --text-hint: #BBBBBB;
+  --text-subtitle: #999999;
+  --text-input: #333333;
+  --text-dropdown: #5A4A3A;
+  --border-light: rgba(232,228,223,0.6);
+  --glass-border: rgba(255,255,255,0.4);
+  --glass-border-subtle: rgba(232,228,223,0.35);
+  --blur-amount: 28px;
+  --blur-amount-strong: 40px;
+  --shadow-card: 0 2px 12px rgba(0,0,0,0.06);
+  --shadow-card-hover: 0 4px 20px rgba(0,0,0,0.08);
+  --nav-shadow: 0 -1px 20px rgba(0,0,0,0.04);
+  --chip-bg: rgba(240,235,229,0.7);
+  --bg-warm-accent: rgba(196,167,125,0.15);
+}
+
+.dark {
+  --bg-primary: #121212;
+  --bg-card: rgba(30,30,30,0.66);
+  --bg-card-inner: rgba(42,42,42,0.62);
+  --bg-card-hover: rgba(42,42,42,0.76);
+  --bg-input: rgba(18,18,18,0.55);
+  --bg-nav: rgba(18,18,18,0.68);
+  --bg-dialog: rgba(30,30,30,0.76);
+  --bg-dropdown: rgba(30,30,30,0.85);
+  --bg-placeholder: #2A2A2A;
+  --green-primary: #9DAD8E;
+  --green-dark: #8B9A7D;
+  --brown-accent: #C8B9AA;
+  --brown-light: #D4B78D;
+  --brown-dropdown: #3A332B;
+  --brown-period-text: #B8A99A;
+  --text-primary: #F5F5F5;
+  --text-secondary: #B0B0B0;
+  --text-hint: #666666;
+  --text-subtitle: #999999;
+  --text-input: #E0E0E0;
+  --text-dropdown: #D4C5B5;
+  --border-light: rgba(58,58,58,0.6);
+  --glass-border: rgba(255,255,255,0.15);
+  --glass-border-subtle: rgba(58,58,58,0.4);
+  --blur-amount: 32px;
+  --blur-amount-strong: 44px;
+  --shadow-card: 0 2px 16px rgba(0,0,0,0.3);
+  --shadow-card-hover: 0 4px 24px rgba(0,0,0,0.4);
+  --nav-shadow: 0 -1px 24px rgba(0,0,0,0.3);
+  --chip-bg: rgba(46,42,36,0.7);
+  --bg-warm-accent: rgba(212,183,141,0.15);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  transition: background 0.4s, color 0.4s;
+}
+
+.bg-decoration {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  animation: blobFloat 20s ease-in-out infinite;
+}
+.bg-blob:nth-child(1) { width: 240px; height: 240px; background: var(--green-primary); opacity: 0.50; top: -50px; left: -60px; }
+.bg-blob:nth-child(2) { width: 220px; height: 220px; background: var(--brown-light); opacity: 0.55; top: 22%; right: -70px; animation-delay: -7s; animation-duration: 25s; }
+.bg-blob:nth-child(3) { width: 200px; height: 200px; background: #A7C4A0; opacity: 0.45; bottom: 12%; left: -30px; animation-delay: -14s; }
+.bg-blob:nth-child(4) { width: 180px; height: 180px; background: var(--brown-accent); opacity: 0.50; top: 52%; right: 0%; animation-delay: -10s; animation-duration: 22s; }
+.bg-blob:nth-child(5) { width: 160px; height: 160px; background: #D4B78D; opacity: 0.45; top: 78%; left: 20%; animation-delay: -4s; animation-duration: 18s; }
+.bg-blob:nth-child(6) { width: 150px; height: 150px; background: #8B9A7D; opacity: 0.42; top: 8%; left: 45%; animation-delay: -12s; animation-duration: 28s; }
+.bg-blob:nth-child(7) { width: 140px; height: 140px; background: #C8B9AA; opacity: 0.48; bottom: 35%; right: -20px; animation-delay: -16s; animation-duration: 24s; }
+@keyframes blobFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -40px) scale(1.05); }
+  50% { transform: translate(-20px, 20px) scale(0.95); }
+  75% { transform: translate(15px, 30px) scale(1.03); }
+}
+
+.phone-frame {
+  position: relative;
+  width: 390px;
+  height: 844px;
+  border-radius: 40px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05);
+  z-index: 1;
+}
+.phone-screen {
+  width: 100%; height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(var(--blur-amount));
+  -webkit-backdrop-filter: blur(var(--blur-amount));
+  border: 0.5px solid var(--glass-border-subtle);
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
+  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.glass-card:hover { background: var(--bg-card-hover); box-shadow: var(--shadow-card-hover); }
+
+.glass-card-inner {
+  background: var(--bg-card-inner);
+  backdrop-filter: blur(var(--blur-amount));
+  -webkit-backdrop-filter: blur(var(--blur-amount));
+  border: 0.5px solid var(--glass-border-subtle);
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+.glass-nav {
+  background: var(--bg-nav);
+  backdrop-filter: blur(var(--blur-amount-strong));
+  -webkit-backdrop-filter: blur(var(--blur-amount-strong));
+  border-top: 0.5px solid var(--glass-border-subtle);
+  box-shadow: var(--nav-shadow);
+}
+
+.glass-chip {
+  background: var(--bg-card);
+  backdrop-filter: blur(var(--blur-amount));
+  -webkit-backdrop-filter: blur(var(--blur-amount));
+  border: 0.5px solid var(--glass-border-subtle);
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: var(--text-dropdown);
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.page {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 64px;
+  overflow-y: auto; overflow-x: hidden;
+  padding: 0 24px; padding-top: 56px;
+  scrollbar-width: none; -ms-overflow-style: none;
+  z-index: 1;
+}
+.page::-webkit-scrollbar { display: none; }
+
+.page-label {
+  position: absolute; top: 20px; right: 20px;
+  background: var(--bg-card); backdrop-filter: blur(10px);
+  border: 0.5px solid var(--glass-border);
+  border-radius: 8px; padding: 3px 8px;
+  font-size: 10px; color: var(--text-hint); letter-spacing: 0.05em; z-index: 5;
+}
+.page-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: bold; font-size: 28px; color: var(--text-primary);
+  letter-spacing: 0.05em; margin-bottom: 8px;
+}
+.page-subtitle {
+  font-size: 13px; color: var(--text-subtitle);
+  letter-spacing: 0.05em; margin-bottom: 24px;
+}
+.card-title {
+  font-family: Georgia, serif;
+  font-weight: bold; font-size: 16px; color: var(--text-primary);
+  letter-spacing: 0.05em;
+}
+
+.bottom-nav {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-around;
+  z-index: 10;
+}
+.nav-item {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  cursor: pointer; padding: 4px 12px;
+  border: none; background: none;
+  color: var(--text-hint); font-size: 11px;
+  transition: color 0.2s; border-radius: 12px;
+}
+.nav-item.active { color: var(--green-primary); }
+.nav-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+
+.page { display: none; }
+.page.active { display: block; }
+
+/* Record */
+.record-input-card { padding: 20px; margin-bottom: 24px; }
+.record-input-card textarea {
+  width: 100%; height: 120px; border: none; background: transparent;
+  color: var(--text-input); font-size: 16px; line-height: 1.6; resize: none; outline: none;
+}
+.record-input-card textarea::placeholder { color: var(--text-hint); }
+.char-divider { width: 100%; height: 1px; background: var(--border-light); margin: 4px 0 0; }
+.char-count { text-align: right; font-size: 11px; color: var(--text-hint); margin-top: 8px; letter-spacing: 0.03em; }
+.toolbar-row { display: flex; align-items: center; gap: 6px; margin-top: 12px; }
+.toolbar-btn {
+  display: flex; align-items: center; gap: 5px;
+  padding: 7px 14px; border: none;
+  background: var(--bg-placeholder); border-radius: 12px;
+  cursor: pointer; color: var(--green-primary);
+  font-size: 12px; transition: background 0.2s;
+}
+.toolbar-btn.active-mode {
+  background: var(--green-primary); color: white;
+}
+.toolbar-btn.active-mode .mode-icon { filter: brightness(0) invert(1); }
+.mode-icon { width: 16px; height: 16px; }
+.save-btn {
+  margin-left: auto; padding: 8px 22px;
+  background: var(--bg-placeholder); color: var(--green-primary);
+  border: none; border-radius: 100px;
+  font-size: 13px; letter-spacing: 0.1em; cursor: pointer; font-weight: 500;
+}
+
+/* Flashback */
+.flashback-section { margin-top: 8px; }
+.flashback-header { display: flex; align-items: center; margin-bottom: 14px; }
+.flashback-header .icon { font-size: 12px; margin-right: 8px; display: flex; }
+.flashback-title { font-family: Georgia, serif; font-weight: bold; font-size: 18px; }
+.flashback-subtitle { margin-left: auto; font-size: 11px; color: var(--text-subtitle); letter-spacing: 0.05em; }
+.flashback-card { padding: 0; margin-bottom: 12px; display: flex; overflow: hidden; }
+.flashback-stripe { width: 3px; flex-shrink: 0; }
+.flashback-stripe-gold { background: var(--brown-light); }
+.flashback-stripe-green { background: var(--green-primary); }
+.flashback-content { padding: 18px; flex: 1; }
+.flashback-date { font-size: 11px; color: var(--text-subtitle); letter-spacing: 0.06em; }
+.flashback-tag {
+  font-size: 12px; color: var(--green-primary);
+  background: rgba(139,154,125,0.15); padding: 2px 8px;
+  border-radius: 4px; letter-spacing: 0.04em;
+}
+.flashback-text { font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-top: 10px; }
+
+/* Diary */
+.search-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 16px; margin-bottom: 16px; border-radius: 20px;
+}
+.search-bar input { flex: 1; border: none; background: transparent; color: var(--text-input); font-size: 14px; outline: none; }
+.search-bar input::placeholder { color: var(--text-hint); }
+.search-icon { width: 18px; height: 18px; color: var(--text-hint); }
+.calendar-card { padding: 20px; margin-bottom: 16px; }
+.calendar-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.calendar-month { font-family: Georgia, serif; font-weight: bold; font-size: 17px; text-align: center; color: var(--text-primary); letter-spacing: 0.05em; }
+.cal-arrow { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 50%; font-size: 18px; color: var(--text-secondary); transition: background 0.2s; }
+.cal-arrow:hover { background: var(--bg-placeholder); }
+.week-header { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 12px; color: var(--text-subtitle); margin-bottom: 8px; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px 2px; text-align: center; }
+.cal-day { padding: 8px 0; font-size: 14px; border-radius: 50%; color: var(--text-primary); cursor: pointer; transition: background 0.2s; }
+.cal-day:hover { background: var(--bg-placeholder); }
+.cal-day.today { background: var(--bg-warm-accent); font-weight: 600; }
+.cal-day.selected { background: var(--green-primary); color: white; font-weight: 600; }
+.cal-day.has-diary::after { content: ''; display: block; width: 5px; height: 5px; background: var(--green-primary); border-radius: 50%; margin: 2px auto 0; }
+.cal-day.selected.has-diary::after { background: white; }
+.date-label { font-family: Georgia, serif; font-weight: bold; font-size: 16px; color: var(--text-primary); letter-spacing: 0.05em; margin-bottom: 12px; }
+.diary-content-area { padding: 24px; }
+.diary-entry { padding: 12px 0; border-bottom: 1px solid var(--border-light); }
+.diary-entry:last-child { border-bottom: none; }
+.diary-time { font-size: 12px; color: var(--text-subtitle); letter-spacing: 0.04em; margin-bottom: 6px; }
+.diary-text { font-size: 14px; color: var(--text-primary); line-height: 1.6; }
+
+/* Track */
+.dropdown-trigger {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 20px; background: var(--brown-dropdown);
+  border-radius: 12px; cursor: pointer; margin-bottom: 24px;
+  color: var(--text-dropdown); font-size: 15px; letter-spacing: 0.05em;
+}
+.summary-card { padding: 24px; margin-bottom: 12px; }
+.trend-card { padding: 20px; margin-bottom: 12px; }
+.tag-card { padding: 20px; margin-bottom: 12px; }
+.stat-row { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+.stat-item { flex: 1; min-width: 0; text-align: center; }
+.stat-number { font-family: Georgia, serif; font-weight: bold; font-size: 22px; color: var(--green-primary); }
+.stat-label { font-size: 12px; color: var(--text-subtitle); letter-spacing: 0.05em; margin-top: 4px; }
+.tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.trend-chart { display: flex; align-items: flex-end; gap: 3px; height: 80px; margin-top: 16px; }
+.trend-bar { flex: 1; border-radius: 3px 3px 0 0; background: var(--green-primary); opacity: 0.6; min-height: 4px; }
+.trend-bar:hover { opacity: 1; }
+
+/* Insight */
+.insight-messages { padding: 0 16px; overflow-y: auto; height: calc(100% - 180px); scrollbar-width: none; }
+.insight-messages::-webkit-scrollbar { display: none; }
+.msg-row { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; }
+.msg-row.user { justify-content: flex-end; }
+.msg-avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.msg-avatar.ai { background: var(--bg-warm-accent); color: var(--green-primary); }
+.msg-avatar.user { background: rgba(139,154,125,0.2); color: var(--brown-accent); }
+.msg-bubble { max-width: 280px; padding: 10px 14px; font-size: 14px; line-height: 1.6; }
+.msg-bubble.ai { background: var(--bg-card); backdrop-filter: blur(var(--blur-amount)); -webkit-backdrop-filter: blur(var(--blur-amount)); border: 0.5px solid var(--glass-border-subtle); border-radius: 16px 16px 4px 16px; color: var(--text-primary); }
+.msg-bubble.user { background: var(--green-primary); border-radius: 16px 16px 16px 4px; color: white; opacity: 0.92; }
+.msg-spacer { width: 40px; flex-shrink: 0; }
+.insight-input-area { padding: 8px 16px 24px; }
+.suggestion-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
+.suggestion-row::-webkit-scrollbar { display: none; }
+.input-row { display: flex; align-items: center; gap: 8px; }
+.input-row input {
+  flex: 1; padding: 12px 16px;
+  border: 0.5px solid var(--glass-border-subtle);
+  border-radius: 14px; background: var(--bg-input);
+  backdrop-filter: blur(var(--blur-amount));
+  -webkit-backdrop-filter: blur(var(--blur-amount));
+  color: var(--text-input); font-size: 14px; outline: none;
+}
+.input-row input::placeholder { color: var(--text-hint); }
+.input-row input:focus { border-color: var(--green-primary); border-width: 1.5px; }
+.send-btn {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: var(--bg-placeholder); border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+}
+.send-btn svg { width: 20px; height: 20px; fill: var(--green-primary); }
+
+/* Profile */
+.profile-header { display: flex; align-items: center; gap: auto; margin-bottom: 32px; }
+.settings-btn {
+  width: 40px; height: 40px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; margin-left: auto;
+}
+.avatar-area { text-align: center; margin-bottom: 28px; cursor: pointer; }
+.avatar-ring {
+  width: 96px; height: 96px; border-radius: 50%;
+  border: 2px solid var(--green-primary);
+  margin: 0 auto 16px; display: flex;
+  align-items: center; justify-content: center;
+  background: var(--bg-card);
+}
+.avatar-ring .icon { width: 48px; height: 48px; color: var(--brown-accent); }
+.username { font-family: Georgia, serif; font-weight: bold; font-size: 20px; color: var(--text-primary); letter-spacing: 0.05em; }
+.bio { font-size: 13px; color: var(--text-subtitle); margin-top: 6px; }
+.stats-card { display: flex; padding: 20px 0; margin-bottom: 24px; }
+.stats-card .stat-item { flex: 1; text-align: center; }
+.api-card { padding: 24px; margin-bottom: 24px; }
+.api-card .card-title { margin-bottom: 6px; }
+.api-card .page-subtitle { margin-bottom: 16px; }
+.api-btn {
+  width: 100%; height: 44px;
+  background: var(--bg-placeholder); color: var(--green-primary);
+  border: none; border-radius: 12px;
+  font-size: 14px; letter-spacing: 0.08em; cursor: pointer;
+}
+.menu-card { margin-bottom: 24px; overflow: hidden; }
+.menu-item { display: flex; align-items: center; gap: 12px; padding: 16px 24px; cursor: pointer; transition: background 0.2s; }
+.menu-item:hover { background: var(--bg-placeholder); }
+.menu-icon-bg { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.menu-icon-green { background: rgba(76,175,80,0.12); }
+.menu-icon-brown { background: rgba(184,169,154,0.15); }
+.menu-icon-accent { background: rgba(196,167,125,0.12); }
+.menu-text { flex: 1; }
+.menu-title-text { font-size: 15px; color: var(--text-primary); letter-spacing: 0.03em; }
+.menu-desc-text { font-size: 12px; color: var(--text-subtitle); margin-top: 2px; }
+.menu-divider { height: 1px; background: var(--border-light); margin: 0 68px; }
+.version-text { text-align: center; font-size: 12px; color: var(--text-hint); letter-spacing: 0.05em; margin-top: 24px; }
+
+/* Controls */
+.controls {
+  position: fixed; top: 50%; right: 30px; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 8px; z-index: 100;
+}
+.ctrl-btn {
+  padding: 8px 16px; border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 8px; background: white; color: #666;
+  font-size: 12px; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.ctrl-btn:hover { background: #f5f5f5; }
+.dark .ctrl-btn { background: #2A2A2A; border-color: #444; color: #ccc; }
+.dark .ctrl-btn:hover { background: #333; }
+.annotation {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,0.7); color: white;
+  padding: 8px 20px; border-radius: 20px;
+  font-size: 13px; z-index: 200; backdrop-filter: blur(10px); white-space: nowrap;
+}
+.mode-indicator {
+  position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 4px; z-index: 200;
+}
+.mode-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(0,0,0,0.15); transition: background 0.3s; }
+.mode-dot.active { background: var(--green-primary); }
+</style>
+</head>
+<body>
+
+<!-- 背景装饰 -->
+<div class="bg-decoration">
+  <div class="bg-blob"></div><div class="bg-blob"></div><div class="bg-blob"></div>
+  <div class="bg-blob"></div><div class="bg-blob"></div><div class="bg-blob"></div><div class="bg-blob"></div>
+</div>
+
+<div class="mode-indicator">
+  <div class="mode-dot active" data-page="record"></div>
+  <div class="mode-dot" data-page="track"></div>
+  <div class="mode-dot" data-page="diary"></div>
+  <div class="mode-dot" data-page="insight"></div>
+  <div class="mode-dot" data-page="profile"></div>
+</div>
+
+<div class="controls">
+  <button class="ctrl-btn" onclick="toggleDark()">浅色/深色</button>
+</div>
+
+<div class="phone-frame" id="phoneFrame">
+<div class="phone-screen">
+
+  <!-- 背景色块（毛玻璃模糊源） -->
+  <div class="bg-decoration">
+    <div class="bg-blob"></div><div class="bg-blob"></div><div class="bg-blob"></div>
+    <div class="bg-blob"></div><div class="bg-blob"></div><div class="bg-blob"></div><div class="bg-blob"></div>
+  </div>
+
+  <!-- RECORD -->
+  <div class="page active" id="page-record">
+    <div class="page-label">RECORD</div>
+    <div class="page-title">记录</div>
+    <div class="page-subtitle">捕捉当下，留下此刻</div>
+
+    <div class="glass-card record-input-card">
+      <textarea placeholder="写点什么，或拍照、录音…"></textarea>
+      <div class="char-divider"></div>
+      <div class="char-count">0</div>
+      <div class="toolbar-row">
+        <button class="toolbar-btn" id="btnModeImage">
+          <svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>拍照</span>
+        </button>
+        <button class="toolbar-btn active-mode" id="btnModeAudio">
+          <svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          <span>录音</span>
+        </button>
+        <button class="save-btn">保存</button>
+      </div>
+    </div>
+
+    <div class="flashback-section">
+      <div class="flashback-header">
+        <span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></span>
+        <span class="flashback-title">时光回顾</span>
+        <span class="flashback-subtitle">来自过去的启发</span>
+      </div>
+      <div class="glass-card flashback-card">
+        <div class="flashback-stripe flashback-stripe-gold"></div>
+        <div class="flashback-content">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <span class="flashback-date">去年今天 · 2025-06-26</span>
+            <span class="flashback-tag">里程碑</span>
+          </div>
+          <div class="flashback-text">完成了第一个项目的交付，团队聚餐庆祝。感觉自己成长了很多，要继续保持这种节奏。</div>
+        </div>
+      </div>
+      <div class="glass-card flashback-card">
+        <div class="flashback-stripe flashback-stripe-green"></div>
+        <div class="flashback-content">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <span class="flashback-date">30天前 · 2026-05-27</span>
+            <span class="flashback-tag">日常</span>
+          </div>
+          <div class="flashback-text">今天天气很好，午休的时候在楼下散步，看到一只橘猫在晒太阳，心情变得特别好。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRACK -->
+  <div class="page" id="page-track">
+    <div class="page-label">TRACK</div>
+    <div class="page-title">追踪</div>
+    <div class="page-subtitle">量化你的生活轨迹</div>
+
+    <div class="dropdown-trigger">
+      <span>本周</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="glass-card summary-card">
+      <div class="card-title">本周总结 · 6月第4周</div>
+      <div class="stat-row">
+        <div class="stat-item"><div class="stat-number">12</div><div class="stat-label">记录数</div></div>
+        <div class="stat-item"><div class="stat-number">5</div><div class="stat-label">活跃天数</div></div>
+        <div class="stat-item"><div class="stat-number">3</div><div class="stat-label">连续天数</div></div>
+      </div>
+    </div>
+    <div class="glass-card trend-card">
+      <div class="card-title">情绪趋势</div>
+      <div class="trend-chart" id="trendChart"></div>
+    </div>
+    <div class="glass-card tag-card">
+      <div class="card-title">洞察标签</div>
+      <div class="tag-list">
+        <span class="glass-chip">关键人物：小明</span>
+        <span class="glass-chip">情绪主题：平静</span>
+        <span class="glass-chip">关键项目：LifeTrack</span>
+        <span class="glass-chip">决策节点：确认方案</span>
+      </div>
+    </div>
+    <div style="height:60px"></div>
+  </div>
+
+  <!-- DIARY -->
+  <div class="page" id="page-diary">
+    <div class="page-label">DIARY</div>
+    <div class="page-title">日记</div>
+    <div class="page-subtitle">回望走过的每一步</div>
+
+    <div class="glass-card search-bar">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="搜索日记内容…" />
+    </div>
+    <div class="glass-card calendar-card">
+      <div class="calendar-nav">
+        <div class="cal-arrow">◀</div>
+        <div class="calendar-month">2026年6月</div>
+        <div class="cal-arrow">▶</div>
+      </div>
+      <div class="week-header"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+    <div class="date-label">6月26日 星期五</div>
+    <div class="glass-card diary-content-area">
+      <div class="diary-entry"><div class="diary-time">14:32</div><div class="diary-text">今天把毛玻璃效果做出来了，整体观感提升很大。深色模式下半透明卡片和背景的融合特别好看。</div></div>
+      <div class="diary-entry"><div class="diary-time">09:15</div><div class="diary-text">早起跑步5公里，空气很清新。回来冲了个澡，感觉精力充沛。</div></div>
+    </div>
+    <div style="height:60px"></div>
+  </div>
+
+  <!-- INSIGHT -->
+  <div class="page" id="page-insight" style="padding:0;padding-top:56px;">
+    <div class="page-label" style="top:56px;">INSIGHT</div>
+    <div style="padding:0 24px 12px;">
+      <div class="page-title">洞察</div>
+      <div class="page-subtitle">AI 帮你发现生活规律</div>
+    </div>
+    <div class="insight-messages">
+      <div class="msg-row">
+        <div class="msg-avatar ai"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12zm7.5 11.5l-1.25 2.75L15 24l2.75-1.25L19 24l1.25-2.75L23 20l-2.75-1.25z"/></svg></div>
+        <div class="msg-bubble ai">你好！我是你的生活洞察助手。可以问我关于你生活的问题，比如「上周心情怎么样？」</div>
+      </div>
+      <div class="msg-row user">
+        <div class="msg-bubble user">最近一个月我的心情趋势如何？</div>
+        <div class="msg-avatar user"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+      </div>
+      <div class="msg-row">
+        <div class="msg-avatar ai"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12zm7.5 11.5l-1.25 2.75L15 24l2.75-1.25L19 24l1.25-2.75L23 20l-2.75-1.25z"/></svg></div>
+        <div class="msg-bubble ai">根据你最近一个月的日记分析，整体心情呈上升趋势。周末的情绪普遍比工作日高1-2分，建议保持周末的户外活动习惯。</div>
+      </div>
+      <div class="msg-row" style="padding-top:0">
+        <div class="msg-spacer"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span class="glass-chip">工作压力来源是什么？</span>
+          <span class="glass-chip">和上月对比如何？</span>
+        </div>
+      </div>
+    </div>
+    <div class="insight-input-area">
+      <div class="suggestion-row">
+        <span class="glass-chip">上周心情怎么样？</span>
+        <span class="glass-chip">这个月做了哪些重要的事？</span>
+        <span class="glass-chip">最近有什么值得回味的瞬间？</span>
+      </div>
+      <div class="input-row">
+        <input type="text" placeholder="输入你的问题…" />
+        <button class="send-btn"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="currentColor"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="page" id="page-profile">
+    <div class="page-label">PROFILE</div>
+    <div class="profile-header">
+      <div class="page-title">我的</div>
+      <div class="glass-card settings-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.488.488 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.611 3.611 0 0112 15.6z"/></svg>
+      </div>
+    </div>
+    <div class="avatar-area">
+      <div class="glass-card avatar-ring">
+        <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      </div>
+      <div class="username">旅行者</div>
+      <div class="bio">记录每一天，发现生活的美</div>
+    </div>
+    <div class="glass-card stats-card">
+      <div class="stat-item"><div class="stat-number">128</div><div class="stat-label">记录数</div></div>
+      <div class="stat-item"><div class="stat-number">45</div><div class="stat-label">记录天数</div></div>
+      <div class="stat-item"><div class="stat-number">7</div><div class="stat-label">连续天数</div></div>
+    </div>
+    <div class="glass-card api-card">
+      <div class="card-title">AI 分析服务</div>
+      <div class="page-subtitle">配置 API Key 后可使用智能分析</div>
+      <button class="api-btn">验证连接</button>
+    </div>
+    <div class="glass-card menu-card">
+      <div class="menu-item">
+        <div class="menu-icon-bg menu-icon-green"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25zM11 2v2h2V2h-2zm0 16h2v-2h-2v2zm8-8h2v-2h-2v2zm0 8h2v-2h-2v2zm-4 4h2v-2h-2v2zM3 5h2V3H3v2zm0 8h2v-2H3v2zm0 8h2v-2H3v2zm8-16h2V3h-2v2zm0 4h2V7h-2v2zm0 4h2v-2h-2v2z"/></svg></div>
+        <div class="menu-text"><div class="menu-title-text">使用统计</div><div class="menu-desc-text">查看详细的使用分析</div></div>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="menu-item">
+        <div class="menu-icon-bg menu-icon-green"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12z"/></svg></div>
+        <div class="menu-text"><div class="menu-title-text">导出日记</div><div class="menu-desc-text">将日记导出为 JSON 文件</div></div>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="menu-item">
+        <div class="menu-icon-bg menu-icon-brown"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.488.488 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.611 3.611 0 0112 15.6z"/></svg></div>
+        <div class="menu-text"><div class="menu-title-text">主题设置</div><div class="menu-desc-text">浅色 / 深色 / 跟随系统</div></div>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="menu-item">
+        <div class="menu-icon-bg menu-icon-accent"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div>
+        <div class="menu-text"><div class="menu-title-text">关于</div><div class="menu-desc-text">版本 1.0.0</div></div>
+      </div>
+    </div>
+    <div class="version-text">LifeTrack v1.0.0</div>
+    <div style="height:40px"></div>
+  </div>
+
+  <!-- 底部导航 -->
+  <div class="bottom-nav glass-nav">
+    <button class="nav-item active" data-page="record">
+      <div class="nav-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></div>
+      <span>记录</span>
+    </button>
+    <button class="nav-item" data-page="track">
+      <div class="nav-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg></div>
+      <span>追踪</span>
+    </button>
+    <button class="nav-item" data-page="diary">
+      <div class="nav-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg></div>
+      <span>日记</span>
+    </button>
+    <button class="nav-item" data-page="insight">
+      <div class="nav-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12zm7.5 11.5l-1.25 2.75L15 24l2.75-1.25L19 24l1.25-2.75L23 20l-2.75-1.25z"/></svg></div>
+      <span>洞察</span>
+    </button>
+    <button class="nav-item" data-page="profile">
+      <div class="nav-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+      <span>我的</span>
+    </button>
+  </div>
+
+</div>
+</div>
+
+<div class="annotation">点击底部导航切换页面 · 右上角切换深色模式</div>
+
+<script>
+document.querySelectorAll('.nav-item').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const page = btn.dataset.page;
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.mode-dot').forEach(d => d.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('page-' + page).classList.add('active');
+    document.querySelector(`.mode-dot[data-page="${page}"]`).classList.add('active');
+  });
+});
+function toggleDark() {
+  document.body.classList.toggle('dark');
+  document.getElementById('phoneFrame').classList.toggle('dark');
+}
+function buildCalendar() {
+  const grid = document.getElementById('calGrid');
+  const daysInMonth = 30, startDay = 0, today = 26;
+  const diaryDays = [2, 5, 8, 10, 12, 15, 18, 20, 22, 24, 25, 26];
+  let html = '';
+  for (let d = 1; d <= daysInMonth; d++) {
+    let cls = 'cal-day';
+    if (d === today) cls += ' today selected';
+    if (diaryDays.includes(d)) cls += ' has-diary';
+    html += `<div class="${cls}">${d}</div>`;
+  }
+  grid.innerHTML = html;
+}
+function buildTrendChart() {
+  const chart = document.getElementById('trendChart');
+  [6, 5, 7, 6, 8, 7, 9, 8, 7, 6, 8, 7, 9, 8, 10, 9, 8, 7, 9, 10].forEach(v => {
+    const bar = document.createElement('div');
+    bar.className = 'trend-bar';
+    bar.style.height = (v * 8) + 'px';
+    chart.appendChild(bar);
+  });
+}
+document.getElementById('btnModeImage').addEventListener('click', function() {
+  this.classList.toggle('active-mode');
+  document.getElementById('btnModeAudio').classList.toggle('active-mode');
+});
+document.getElementById('btnModeAudio').addEventListener('click', function() {
+  this.classList.toggle('active-mode');
+  document.getElementById('btnModeImage').classList.toggle('active-mode');
+});
+buildCalendar();
+buildTrendChart();
+</script>
+
+</body>
+</html>
