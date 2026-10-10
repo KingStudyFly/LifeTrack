@@ -1,0 +1,45 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+/.idea/deploymentTargetDropDown.xml
+/.idea/deploymentTargetSelector.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+*.jks
+*.keystore
+
+# 日志
+*.log
+
+# IDE
+.idea/
+.vscode/
+
+# 构建产物
+app/build/
+app/release/
+build/
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# 依赖与工具产物
+node_modules/
+.workbuddy/
+.uploads/
+.trae/
+
+# 敏感信息
+secrets.properties
+keystore.properties
